@@ -1,0 +1,5 @@
+[gerrit]
+host=gerrit.fastlizard4.org
+port=12345
+project=LizardNet-Minecraft/Overviewer-Config.git
+defaultbranch=main
