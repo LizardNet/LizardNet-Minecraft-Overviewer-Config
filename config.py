@@ -2,7 +2,7 @@ import os
 from collections import OrderedDict
 
 from .observer import JSObserver, MultiplexingObserver, LoggingObserver
-from common import (
+from .common import (
     overworld_marker_definitions,
     nether_marker_definitions,
     end_marker_definitions,
