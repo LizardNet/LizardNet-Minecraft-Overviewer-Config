@@ -1,4 +1,6 @@
 import os
+from collections import OrderedDict
+
 from .observer import JSObserver, MultiplexingObserver, LoggingObserver
 from common import (
     overworld_marker_definitions,
@@ -6,8 +8,8 @@ from common import (
     end_marker_definitions,
 )
 
-worlds = dict()
-renders = dict()
+worlds = OrderedDict()
+renders = OrderedDict()
 
 world_name_map = {
     "s2": "Bob",
