@@ -3,6 +3,8 @@ set -x
 set -e
 set -o pipefail
 
+PYTHONPATH="${WORKSPACE}:${PYTHONPATH}"
+
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 1 --genpoi --config=config.py
 
 rm -r "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"
