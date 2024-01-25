@@ -1,0 +1,2 @@
+#!/bin/bash
+/opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -v -p 6 --no-tile-checks --config=config.py
