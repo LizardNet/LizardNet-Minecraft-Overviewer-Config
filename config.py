@@ -9,21 +9,21 @@ from common import (
 worlds = dict()
 renders = dict()
 
-worldNameMap = {
+world_name_map = {
     "s2": "Bob",
 }
 
-serverId = os.environ.get("SERVER")
-worldName = worldNameMap[serverId]
+server_id = os.environ.get("SERVER")
+world_name = world_name_map[server_id]
 
-worlds[worldName] = (
-    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{serverId}/{worldName}"
+worlds[world_name] = (
+    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{server_id}/{world_name}"
 )
-worlds[f"{worldName}_nether"] = (
-    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{serverId}/{worldName}_nether"
+worlds[f"{world_name}_nether"] = (
+    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{server_id}/{world_name}_nether"
 )
-worlds[f"{worldName}_the_end"] = (
-    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{serverId}/{worldName}_the_end"
+worlds[f"{world_name}_the_end"] = (
+    os.environ.get("MINECRAFT_WORLD_STAGING") + f"/{server_id}/{world_name}_the_end"
 )
 
 outputdir = os.environ.get("OVERVIEWER_OUTPUT_DIRECTORY")
@@ -35,8 +35,8 @@ observer = MultiplexingObserver(
 
 
 renders["myrender"] = {
-    "world": worldName,
-    "title": f"LizardNet Minecraft Server {serverId} Overworld",
+    "world": world_name,
+    "title": f"LizardNet Minecraft Server {server_id} Overworld",
     "markers": overworld_marker_definitions(),
     "rendermode": "smooth_lighting",
     "dimension": "overworld",
@@ -46,8 +46,8 @@ renders["myrender"] = {
 }
 
 renders["myrender_night"] = {
-    "world": worldName,
-    "title": f"LizardNet Minecraft Server {serverId} Overworld (nighttime)",
+    "world": world_name,
+    "title": f"LizardNet Minecraft Server {server_id} Overworld (nighttime)",
     "markers": overworld_marker_definitions(),
     "rendermode": "smooth_night",
     "dimension": "overworld",
@@ -57,8 +57,8 @@ renders["myrender_night"] = {
 }
 
 renders["nether"] = {
-    "world": f"{worldName}_nether",
-    "title": f"LizardNet Minecraft Server {serverId} NETHER",
+    "world": f"{world_name}_nether",
+    "title": f"LizardNet Minecraft Server {server_id} NETHER",
     "markers": nether_marker_definitions(),
     "rendermode": "nether",
     "dimension": "nether",
@@ -68,8 +68,8 @@ renders["nether"] = {
 }
 
 renders["the_end"] = {
-    "world": f"{worldName}_the_end",
-    "title": f"LizardNet Minecraft Server {serverId} THE END",
+    "world": f"{world_name}_the_end",
+    "title": f"LizardNet Minecraft Server {server_id} THE END",
     "markers": end_marker_definitions(),
     "rendermode": "normal",
     "dimension": "end",
@@ -79,7 +79,7 @@ renders["the_end"] = {
 }
 
 renders["biomeoverlay"] = {
-    "world": worldName,
+    "world": world_name,
     "rendermode": [ClearBase(), BiomeOverlay()],
     "title": "Biome Coloring Overlay",
     "overlay": ["myrender"],
