@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.append(os.environ.get("WORKSPACE"))
+
 from collections import OrderedDict
 
 from .observer import JSObserver, MultiplexingObserver, LoggingObserver
