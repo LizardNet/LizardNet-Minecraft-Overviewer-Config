@@ -29,8 +29,7 @@ def overworld_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named entities", filterFunction=named_entity_filter, checked=False),
-        dict(name="Squids", filterFunction=squid_filter, checked=False),
+        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
     return markers
@@ -53,7 +52,7 @@ def nether_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named entities", filterFunction=named_entity_filter, checked=False),
+        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
@@ -67,7 +66,7 @@ def nether_roof_marker_definitions():
             icon="signpost_icon.png",
             showIconInLegend=True,
         ),
-        dict(name="Named entities", filterFunction=named_entity_filter, checked=False),
+        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
@@ -95,7 +94,7 @@ def end_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named entities", filterFunction=named_entity_filter, checked=False),
+        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
@@ -330,17 +329,10 @@ def player_icons(poi):
         return "Last known location for %s" % poi["EntityId"]
 
 
-def named_entity_filter(poi):
-    if "CustomName" in poi:
-        if poi["CustomName"] and poi["id"] != "Control" and poi["id"] != "Chest":
-            poi["icon"] = "https://mcmaps.fastlizard4.org/ocelot.png"
-            return "%s" % poi["CustomName"], "%s named %s" % (
-                poi["id"],
-                poi["CustomName"],
-            )
-
-
-def squid_filter(poi):
-    if poi["id"] == "Squid":
+def named_mob_filter(poi):
+    if "CustomName" in poi and "Health" in poi:
         poi["icon"] = "https://mcmaps.fastlizard4.org/ocelot.png"
-        return "%s" % poi["CustomName"], "%s" % poi["id"]
+        return "%s" % poi["CustomName"], "%s named %s" % (
+            poi["id"],
+            poi["CustomName"],
+        )
