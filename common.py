@@ -1,35 +1,35 @@
 def overworld_marker_definitions():
     markers = [
-        dict(name="Players", filterFunction=player_icons, checked=True),
+        # dict(name="Players", filterFunction=player_icons, checked=True),
         dict(
             name="Signs",
-            filterFunction=fastlizard_sign_filter,
+            filterFunction=simple_sign_filter,
             checked=True,
             icon="signpost_icon.png",
             showIconInLegend=True,
         ),
-        dict(
-            name="Player bases",
-            filterFunction=fastlizard_house_sign_filter,
-            icon="custom-icons/player/marker_house.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(
-            name="Fast Travel",
-            filterFunction=fastlizard_fast_travel_filter,
-            icon="custom-icons/transport/marker_fasttravel.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(
-            name="Transport",
-            filterFunction=fastlizard_transport_sign_filter,
-            icon="custom-icons/transport/marker_train.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+    #     dict(
+    #         name="Player bases",
+    #         filterFunction=fastlizard_house_sign_filter,
+    #         icon="custom-icons/player/marker_house.png",
+    #         checked=True,
+    #         showIconInLegend=True,
+    #     ),
+    #     dict(
+    #         name="Fast Travel",
+    #         filterFunction=fastlizard_fast_travel_filter,
+    #         icon="custom-icons/transport/marker_fasttravel.png",
+    #         checked=True,
+    #         showIconInLegend=True,
+    #     ),
+    #     dict(
+    #         name="Transport",
+    #         filterFunction=fastlizard_transport_sign_filter,
+    #         icon="custom-icons/transport/marker_train.png",
+    #         checked=True,
+    #         showIconInLegend=True,
+    #     ),
+    #     dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
     return markers
@@ -37,64 +37,64 @@ def overworld_marker_definitions():
 
 def nether_marker_definitions():
     return [
-        dict(name="Players", filterFunction=player_icons, checked=True),
+        # dict(name="Players", filterFunction=player_icons, checked=True),
         dict(
             name="Signs",
-            filterFunction=fastlizard_sign_filter,
+            filterFunction=simple_sign_filter,
             checked=True,
             icon="signpost_icon.png",
             showIconInLegend=True,
         ),
-        dict(
-            name="Player bases",
-            filterFunction=fastlizard_house_sign_filter,
-            icon="custom-icons/player/marker_house.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        # dict(
+        #     name="Player bases",
+        #     filterFunction=fastlizard_house_sign_filter,
+        #     icon="custom-icons/player/marker_house.png",
+        #     checked=True,
+        #     showIconInLegend=True,
+        # ),
+        # dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
 def nether_roof_marker_definitions():
     return [
-        dict(name="Players", filterFunction=player_icons, checked=True),
-        dict(
-            name="Signs",
-            filterFunction=fastlizard_sign_filter,
-            checked=True,
-            icon="signpost_icon.png",
-            showIconInLegend=True,
-        ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        # dict(name="Players", filterFunction=player_icons, checked=True),
+        # dict(
+        #     name="Signs",
+        #     filterFunction=fastlizard_sign_filter,
+        #     checked=True,
+        #     icon="signpost_icon.png",
+        #     showIconInLegend=True,
+        # ),
+        # dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
 def end_marker_definitions():
     return [
-        dict(name="Players", filterFunction=player_icons, checked=True),
-        dict(
-            name="Portals",
-            filterFunction=portal_sign_filter,
-            icon="custom-icons/transport/marker_endportal.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
+        # dict(name="Players", filterFunction=player_icons, checked=True),
+        # dict(
+        #     name="Portals",
+        #     filterFunction=portal_sign_filter,
+        #     icon="custom-icons/transport/marker_endportal.png",
+        #     checked=True,
+        #     showIconInLegend=True,
+        # ),
         dict(
             name="Signs",
-            filterFunction=fastlizard_sign_filter,
+            filterFunction=simple_sign_filter,
             checked=True,
             icon="signpost_icon.png",
             showIconInLegend=True,
         ),
-        dict(
-            name="Player bases",
-            filterFunction=fastlizard_house_sign_filter,
-            icon="custom-icons/player/marker_house.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        # dict(
+        #     name="Player bases",
+        #     filterFunction=fastlizard_house_sign_filter,
+        #     icon="custom-icons/player/marker_house.png",
+        #     checked=True,
+        #     showIconInLegend=True,
+        # ),
+        # dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
     ]
 
 
@@ -205,6 +205,9 @@ def global_sign_filter(poi):
     if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
         return format_sign(poi, "Potato?", None, include_first_line=True)
 
+def simple_sign_filter(poi):
+    if poi['id'] == 'Sign' or poi['id'] == "minecraft:sign":
+        return poi["id"]
 
 def get_sign_text(poi):
     if "front_text" in poi:
