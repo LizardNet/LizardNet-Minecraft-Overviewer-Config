@@ -103,8 +103,12 @@ def format_sign(poi, title, note, include_first_line=False):
     if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
         poi_type = "hanging" if poi["id"] == "minecraft:hanging_sign" else "normal"
 
-        front_lines = poi["front_text"]["messages"]
-        back_lines = poi["back_text"]["messages"]
+        if "front_text" in poi:
+            front_lines = poi["front_text"]["messages"]
+            back_lines = poi["back_text"]["messages"]
+        else:
+            front_lines = [poi["Text1"], poi["Text2"], poi["Text3"], poi["Text4"]]
+            back_lines = []
 
         if not include_first_line:
             front_lines = front_lines[1:]
@@ -138,18 +142,33 @@ def format_sign(poi, title, note, include_first_line=False):
     info_window_text = title_html
 
     if front_lines:
-        info_window_text += (
-            '<div class="signtext mcpoi-'
-            + poi_type
-            + " mccolor-"
-            + poi["front_text"]["color"]
-            + " mcglow-"
-            + str(poi["front_text"]["has_glowing_text"])
-            + '">'
-            + "<br />".join(front_lines)
-            + "</div><br />"
-        )
+        # Annoyingly, we need to account here for both the old and new sign formats
+        if "front_text" in poi:
+            info_window_text += (
+                '<div class="signtext mcpoi-'
+                + poi_type
+                + " mccolor-"
+                + poi["front_text"]["color"]
+                + " mcglow-"
+                + str(poi["front_text"]["has_glowing_text"])
+                + '">'
+                + "<br />".join(front_lines)
+                + "</div><br />"
+            )
+        else:
+            info_window_text += (
+                '<div class="signtext mcpoi-'
+                + poi_type
+                + " mccolor-"
+                + poi["Color"]
+                + " mcglow-"
+                + str(poi["GlowingText"])
+                + '">'
+                + "<br />".join(front_lines)
+                + "</div><br />"
+            )
     if back_lines:
+        # No need to account for the old sign format here, since old signs never have back text.
         info_window_text += (
             '<div class="signtext mcpoi-'
             + poi_type
@@ -183,8 +202,17 @@ def global_sign_filter(poi):
 
 
 def get_sign_text(poi):
-    front = " ".join(poi["front_text"]["messages"]).strip().lower()
-    back = " ".join(poi["back_text"]["messages"]).strip().lower()
+    if "front_text" in poi:
+        front = " ".join(poi["front_text"]["messages"]).strip().lower()
+        back = " ".join(poi["back_text"]["messages"]).strip().lower()
+    else:
+        front = (
+            " ".join([poi["Text1"], poi["Text2"], poi["Text3"], poi["Text4"]])
+            .strip()
+            .lower()
+        )
+        back = ""
+
     return front, back, front + " " + back
 
 
@@ -220,7 +248,9 @@ def fastlizard_sign_filter(poi):
         elif sign_explicit_visibility(front, back, "#"):
             return None  # Return nothing; sign is private
         elif sign_explicit_visibility(front, back, "@"):
-            return format_sign(poi, "Public " + sign_type, None, include_first_line=True)
+            return format_sign(
+                poi, "Public " + sign_type, None, include_first_line=True
+            )
         elif public:
             return format_sign(poi, sign_type, None, include_first_line=True)
         else:
