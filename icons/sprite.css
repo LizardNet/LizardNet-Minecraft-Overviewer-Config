@@ -1,0 +1,1739 @@
+div.icon.mc-entity-allay {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-allay {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-axolotl {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-axolotl {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-bat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-bat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-camel {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-camel {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-cat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-cat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-chicken {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-chicken {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-cod {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-cod {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-cow {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-cow {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-donkey {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-donkey {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-frog {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: 0px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-frog {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: 0px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-glow_squid {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-glow_squid {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-horse {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-horse {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-mooshroom {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-mooshroom {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-mule {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-mule {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-ocelot {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-ocelot {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-parrot {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-parrot {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-pig {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-pig {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-pufferfish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-pufferfish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-rabbit {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-rabbit {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-salmon {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -32px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-salmon {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -16px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-sheep {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-sheep {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-skeleton_horse {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-skeleton_horse {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-sniffer {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-sniffer {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-snow_golem {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-snow_golem {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-squid {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-squid {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-strider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-strider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-tadpole {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-tadpole {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-tropical_fish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-tropical_fish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-turtle {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-turtle {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-villager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -64px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-villager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -32px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-wandering_trader {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-wandering_trader {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-bee {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-bee {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-cave_spider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-cave_spider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-dolphin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-dolphin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-drowned {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-drowned {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-enderman {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-enderman {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-fox {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-fox {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-goat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-goat {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-iron_golem {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-iron_golem {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-llama {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -96px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-llama {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -48px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-trader_llama {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-trader_llama {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-panda {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-panda {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-piglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-piglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-polar_bear {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-polar_bear {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-spider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-spider {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-wolf {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-wolf {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-zombified_piglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-zombified_piglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-blaze {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-blaze {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-creeper {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-creeper {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-elder_guardian {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -128px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-elder_guardian {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -64px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-endermite {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-endermite {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-evoker {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-evoker {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-ghast {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-ghast {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-guardian {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-guardian {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-hoglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-hoglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-husk {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-husk {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-magma_cube {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-magma_cube {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-phantom {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-phantom {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-piglin_brute {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-piglin_brute {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-pillager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -160px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-pillager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -80px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-ravager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-ravager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-shulker {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-shulker {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-silverfish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-silverfish {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-skeleton {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-skeleton {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-slime {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-slime {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-stray {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-stray {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-vex {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-vex {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-vindicator {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-vindicator {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-warden {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-warden {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-witch {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -288px;
+  background-position-y: -192px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-witch {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -144px;
+  background-position-y: -96px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-wither_skeleton {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-wither_skeleton {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: 0px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-zoglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-zoglin {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -16px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-zombie {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-zombie {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -32px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-zombie_villager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-zombie_villager {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -48px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-ender_dragon {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-ender_dragon {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -64px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-wither {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -160px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-wither {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -80px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-armadillo {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -192px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-armadillo {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -96px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-breeze {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -224px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-breeze {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -112px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+div.icon.mc-entity-illusioner {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -256px;
+  background-position-y: -224px;
+  background-size: 1000%;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+div.leaflet-marker-icon .ov-marker.mc-entity-illusioner {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: -128px;
+  background-position-y: -112px;
+  width: 0px;
+  height: 0px;
+  padding: 8px;
+  display: inline-block;
+}
+
+/*# sourceMappingURL=sprite.css.map */
