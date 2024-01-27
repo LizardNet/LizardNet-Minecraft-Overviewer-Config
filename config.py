@@ -35,9 +35,12 @@ worlds[f"{world_name}_the_end"] = (
 outputdir = os.environ.get("OVERVIEWER_OUTPUT_DIRECTORY")
 customwebassets = os.environ.get("WORKSPACE") + "/assets"
 
-observer = MultiplexingObserver(
-    LoggingObserver(), JSObserver(outputdir=outputdir, minrefresh=10)
-)
+if os.environ.get("IN_MAPGEN", 0):
+    observer_list = [LoggingObserver(), JSObserver(outputdir=outputdir, minrefresh=10)]
+else:
+    observer_list = [LoggingObserver()]
+
+observer = MultiplexingObserver(*observer_list)
 
 
 renders["myrender"] = {
