@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "414b91e9_0bb479ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-01-27T10:10:38Z",
+      "side": 1,
+      "message": "Tested by modifying the `poigen` script to not call Overviewer and instead call a `test.py` that contains similar logic as that added to `config.py` in this change, removing the `custom-assets`-related logic from `poigen`, and running locally.",
+      "revId": "ba78de2f895268d19c28cfd4e1fc1db1beacb64d",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
