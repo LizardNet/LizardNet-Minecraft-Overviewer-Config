@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aef259d_e34644bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2024-01-27T21:25:09Z",
+      "side": 1,
+      "message": "If we have Dart Sass available on Jenkins, I\u0027d prefer to remove sprite.css/sprite.css.map and generate it dynamically from sprite.scss during the build job.",
+      "revId": "4d2f501b2bc5d527e1d221dd3a40588d490ceea6",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
