@@ -14,6 +14,8 @@ jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", up
 
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py
 
+/opt/dart-sass/sass -s compressed icons/sprite.scss icons/sprite.css
+
 rm -r "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"
 mkdir "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"
 cp -r icons/* "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons/"

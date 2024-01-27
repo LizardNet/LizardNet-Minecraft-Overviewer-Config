@@ -1,3 +1,4 @@
+@import "sprite.css";
 @font-face {
   font-family: "Minecraft";
   font-style: normal;
@@ -229,3 +230,19 @@ img.ov-marker-legend {
 .mccolor-gray { color: #474F52; }
 .mccolor-light_gray { color: #9D9D97; }
 .mccolor-black { color: #1D1D21; }
+
+.infoWindow-entity-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.infoWindow-entity-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px
+}
+
+.infoWindow-entity-text h4 {
+    margin-top: 0px;
+    margin-bottom: 3px;
+}

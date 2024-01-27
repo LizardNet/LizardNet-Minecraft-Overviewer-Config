@@ -29,7 +29,13 @@ def overworld_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        dict(
+            name="Named mobs",
+            filterFunction=named_mob_filter,
+            icon="https://mcmaps.fastlizard4.org/ocelot.png",
+            checked=False,
+            showIconInLegend=True
+        ),
     ]
 
     return markers
@@ -52,7 +58,13 @@ def nether_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        dict(
+            name="Named mobs",
+            filterFunction=named_mob_filter,
+            icon="https://mcmaps.fastlizard4.org/ocelot.png",
+            checked=False,
+            showIconInLegend=True
+        ),
     ]
 
 
@@ -66,7 +78,13 @@ def nether_roof_marker_definitions():
             icon="signpost_icon.png",
             showIconInLegend=True,
         ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        dict(
+            name="Named mobs",
+            filterFunction=named_mob_filter,
+            icon="https://mcmaps.fastlizard4.org/ocelot.png",
+            checked=False,
+            showIconInLegend=True
+        ),
     ]
 
 
@@ -94,7 +112,13 @@ def end_marker_definitions():
             checked=True,
             showIconInLegend=True,
         ),
-        dict(name="Named mobs", filterFunction=named_mob_filter, checked=False),
+        dict(
+            name="Named mobs",
+            filterFunction=named_mob_filter,
+            icon="https://mcmaps.fastlizard4.org/ocelot.png",
+            checked=False,
+            showIconInLegend=True
+        ),
     ]
 
 
@@ -337,8 +361,98 @@ def player_icons(poi):
 
 def named_mob_filter(poi):
     if "CustomName" in poi and "Health" in poi:
-        poi["icon"] = "https://mcmaps.fastlizard4.org/ocelot.png"
-        return "%s" % poi["CustomName"], "%s named %s" % (
-            poi["id"],
-            poi["CustomName"],
-        )
+        entity_id = poi['id'][len('minecraft:'):]
+
+        poi['cssClass'] = 'mc-entity-' + entity_id
+
+        hover = "%s" % poi["CustomName"]
+
+        window = '<div class="infoWindow-entity-wrapper">'
+        window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
+        window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (poi["CustomName"], entity_id_to_mob(entity_id))
+
+        return hover, window
+
+def entity_id_to_mob(id):
+    mapping = {
+        'allay': 'Allay',
+        'armadillo': 'Armadillo',
+        'axolotl': 'Axolotl',
+        'bat': 'Bat',
+        'bee': 'Bee',
+        'blaze': 'Blaze',
+        'breeze': 'Breeze',
+        'camel': 'Camel',
+        'cat': 'Cat',
+        'cave_spider': 'Cave Spider',
+        'chicken': 'Chicken',
+        'cod': 'Cod',
+        'cow': 'Cow',
+        'creeper': 'Creeper',
+        'dolphin': 'Dolphin',
+        'donkey': 'Donkey',
+        'drowned': 'Drowned',
+        'elder_guardian': 'Elder Guardian',
+        'ender_dragon': 'Ender Dragon',
+        'enderman': 'Enderman',
+        'endermite': 'Endermite',
+        'evoker': 'Evoker',
+        'fox': 'Fox',
+        'frog': 'Frog',
+        'ghast': 'Ghast',
+        'glow_squid': 'Glow Squid',
+        'goat': 'Goat',
+        'guardian': 'Guardian',
+        'hoglin': 'Hoglin',
+        'horse': 'Horse',
+        'husk': 'Husk',
+        'illusioner': 'Illusioner',
+        'iron_golem': 'Iron Golem',
+        'llama': 'Llama',
+        'magma_cube': 'Magma Cube',
+        'mooshroom': 'Mooshroom',
+        'mule': 'Mule',
+        'ocelot': 'Ocelot',
+        'panda': 'Panda',
+        'parrot': 'Parrot',
+        'phantom': 'Phantom',
+        'pig': 'Pig',
+        'piglin_brute': 'Piglin Brute',
+        'piglin': 'Piglin',
+        'pillager': 'Pillager',
+        'polar_bear': 'Polar Bear',
+        'pufferfish': 'Pufferfish',
+        'rabbit': 'Rabbit',
+        'ravager': 'Ravager',
+        'salmon': 'Salmon',
+        'sheep': 'Sheep',
+        'shulker': 'Shulker',
+        'silverfish': 'Silverfish',
+        'skeleton_horse': 'Skeleton Horse',
+        'skeleton': 'Skeleton',
+        'slime': 'Slime',
+        'sniffer': 'Sniffer',
+        'snow_golem': 'Snow Golem',
+        'spider': 'Spider',
+        'squid': 'Squid',
+        'stray': 'Stray',
+        'strider': 'Strider',
+        'tadpole': 'Tadpole',
+        'trader_llama': 'Trader Llama',
+        'tropical_fish': 'Tropical Fish',
+        'turtle': 'Turtle',
+        'vex': 'Vex',
+        'villager': 'Villager',
+        'vindicator': 'Vindicator',
+        'wandering_trader': 'Wandering Trader',
+        'warden': 'Warden',
+        'witch': 'Witch',
+        'wither_skeleton': 'Wither Skeleton',
+        'wither': 'Wither',
+        'wolf': 'Wolf',
+        'zombie_villager': 'Zombie Villager',
+        'zombie': 'Zombie',
+        'zombified_piglin': 'Zombified Piglin',
+    }
+
+    return mapping.get(id, id)
