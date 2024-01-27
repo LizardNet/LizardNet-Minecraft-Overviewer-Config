@@ -3,8 +3,19 @@ set -x
 set -e
 set -o pipefail
 
+export IN_POIGEN=1
+
+ORIGINAL_MESSAGE=$(jq -cr '.message' "${OVERVIEWER_OUTPUT_DIRECTORY}/progress.json")
+
+# Trim ORIGINAL_MESSAGE to everything before the first semicolon
+ORIGINAL_MESSAGE=${ORIGINAL_MESSAGE%;*}
+
+jq -nc '{message: "POIgen in progress...", update: (60 * 1000), messageTime: '"$(date -u +%s)"'}' > "${OVERVIEWER_OUTPUT_DIRECTORY}/progress.json"
+
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 4 --genpoi --config=config.py
 
 rm -r "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"
 mkdir "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"
 cp -r icons/* "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons/"
+
+jq -nc '{message: "'"${ORIGINAL_MESSAGE}"'; map is updated daily at 00:00, 06:00, 12:00, and 18:00 UTC", update: (60 * 1000), messageTime: '"$(date -u +%s)"'}' > "${OVERVIEWER_OUTPUT_DIRECTORY}/progress.json"
