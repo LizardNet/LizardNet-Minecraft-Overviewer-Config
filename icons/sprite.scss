@@ -1,0 +1,44 @@
+@use "sass:list";
+
+$spriter1: (allay, axolotl, bat, camel, cat, chicken, cod, cow, donkey, frog);
+$spriter2: (glow_squid, horse, mooshroom, mule, ocelot, parrot, pig, pufferfish, rabbit, salmon);
+$spriter3: (sheep, skeleton_horse, sniffer, snow_golem, squid, strider, tadpole, tropical_fish, turtle, villager);
+$spriter4: (wandering_trader, bee, cave_spider, dolphin, drowned, enderman, fox, goat, iron_golem, llama);
+$spriter5: (trader_llama, panda, piglin, polar_bear, spider, wolf, zombified_piglin, blaze, creeper, elder_guardian);
+$spriter6: (endermite, evoker, ghast, guardian, hoglin, husk, magma_cube, phantom, piglin_brute, pillager);
+$spriter7: (ravager, shulker, silverfish, skeleton, slime, stray, vex, vindicator, warden, witch);
+$spriter8: (wither_skeleton, zoglin, zombie, zombie_villager, ender_dragon, wither, armadillo, breeze, illusioner);
+
+$spriteRowList: ($spriter1, $spriter2, $spriter3, $spriter4, $spriter5, $spriter6, $spriter7, $spriter8);
+
+@mixin sprite($x, $y, $zoom: 1) {
+  background-image: url(./mobs.png);
+  background-repeat: no-repeat;
+  background-position-x: ($x - 1) * -16px * $zoom;
+  background-position-y: ($y - 1) * -16px * $zoom;
+}
+
+@each $spriteList in $spriteRowList {
+  @each $mob in $spriteList {
+    div.icon.mc-entity-#{$mob} {
+      @include sprite(list.index($spriteList, $mob), list.index($spriteRowList, $spriteList), 2);
+
+      background-size: 1000%;
+      width: 32px;
+      height: 32px;
+
+      image-rendering: pixelated;
+    }
+
+
+    div.leaflet-marker-icon .ov-marker.mc-entity-#{$mob} {
+      @include sprite(list.index($spriteList, $mob), list.index($spriteRowList, $spriteList));
+
+      width: 0px;
+      height: 0px;
+      padding: 8px;
+
+      display: inline-block;
+    }
+  }
+}
