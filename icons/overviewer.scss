@@ -1,4 +1,6 @@
-@import "sprite.css";
+@use "sass:map";
+@use "sprite";
+
 @font-face {
   font-family: "Minecraft";
   font-style: normal;
@@ -66,10 +68,10 @@ body {
     line-height: 160%;
     text-align: center;
     padding: 0px 6px;
-    
+
     background-image: url('control-bg.png');
     background-repeat: repeat-x;
-    
+
     border: 1px solid #A9BBDF;
     border-radius: 2px 2px;
     box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;
@@ -91,11 +93,11 @@ body {
 .customControl > div.dropDown {
     font-size: 12px;
     background-color: white;
-    
+
     border: 1px solid #A9BBDF;
     border-radius: 2px 2px;
     box-shadow: rgba(0, 0, 0, 0.347656) 2px 2px 3px;
-    
+
     display: none;
 }
 
@@ -153,7 +155,7 @@ div#searchDropDown {
 
 div.searchResultItem  {
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 
 div.searchResultItem img {
@@ -204,32 +206,107 @@ img.ov-marker-legend {
 
 .signtext.mcpoi-hanging {
     background-image: url(./stripped_oak_log.png);
+    background-size: 114px 114px;
 }
 
-.mccolor-white.mcglow-1 {
-    text-shadow: 0 0 3px black, 0 0 5px white, 0 0 5px white, 0 0 5px white, 0 0 5px white, 0 0 6px white, 0 0 6px white;
+$dye-colours: (
+    "white": ("dye": #F9FFFE, "glow": #FCFCFC, "edge": #656565),
+    "light_gray": ("dye": #9D9D97, "glow": #D0D0D0, "edge": #535353),
+    "gray": ("dye": #474F52, "glow": #7E7E7E, "edge": #323232),
+    "black": ("dye": #1D1D21, "glow": #000000, "edge": #EDE8CA),
+    "brown": ("dye": #835432, "glow": #894413, "edge": #361B07),
+    "red": ("dye": #B02E26, "glow": #FC0000, "edge": #650000),
+    "orange": ("dye": #F9801D, "glow": #FC671F, "edge": #65280C),
+    "yellow": ("dye": #FED83D, "glow": #FCFC00, "edge": #656500),
+    "lime": ("dye": #80C71F, "glow": #8DFC00, "edge": #4B6500),
+    "green": ("dye": #5E7C16, "glow": #00FC00, "edge": #006500),
+    "cyan": ("dye": #169C9C, "glow": #00D6D6, "edge": #006565),
+    "light_blue": ("dye": #3AB3DA, "glow": #98BECB, "edge": #3C4B51),
+    "blue": ("dye": #3C44AA, "glow": #0000FC, "edge": #000065),
+    "purple": ("dye": #8932B8, "glow": #9E20ED, "edge": #3F0C5F),
+    "magenta": ("dye": #C74EBD, "glow": #FC00FC, "edge": #650065),
+    "pink": ("dye": #F38BAA, "glow": #FC68B2, "edge": #652947),
+);
+
+@each $colour in ("orange", "yellow", "lime", "cyan", "light_blue", "magenta", "pink", "light_gray") {
+    .mcpoi-normal {
+        &.signtext.mccolor-#{$colour} {
+            background-image: url(./dark_oak_planks.png);
+
+            &.mcglow-1 {
+                background-image: url(./oak_planks.png);
+            }
+        }
+    }
+    .mcpoi-hanging {
+        &.signtext.mccolor-#{$colour} {
+            background-image: url(./stripped_dark_oak_log.png);
+
+            &.mcglow-1 {
+                background-image: url(./stripped_oak_log.png);
+            }
+        }
+    }
 }
 
-.mcglow-1 {
-    text-shadow: 0 0 5px white, 0 0 5px white, 0 0 5px white, 0 0 5px white, 0 0 6px white, 0 0 6px white;
+@each $colour in ("brown", "green") {
+    .mcpoi-normal {
+        &.signtext.mccolor-#{$colour} {
+            background-image: url(./birch_planks.png);
+
+            &.mcglow-1 {
+                background-image: url(./oak_planks.png);
+            }
+        }
+    }
+    .mcpoi-hanging {
+        &.signtext.mccolor-#{$colour} {
+            background-image: url(./stripped_birch_log.png);
+
+            &.mcglow-1 {
+                background-image: url(./stripped_oak_log.png);
+            }
+        }
+    }
 }
 
-.mccolor-brown { color:  #835432; }
-.mccolor-red { color:  #B02E26; }
-.mccolor-orange { color: #F9801D; }
-.mccolor-yellow { color: #FED83D; }
-.mccolor-lime { color: #80C71F; }
-.mccolor-green { color: #5E7C16; }
-.mccolor-cyan { color: #169C9C; }
-.mccolor-light_blue { color: #3AB3DA; }
-.mccolor-blue { color:  #3C44AA; }
-.mccolor-magenta { color: #C74EBD; }
-.mccolor-purple { color: #8932B8; }
-.mccolor-pink { color: #F38BAA; }
-.mccolor-white { color:  #F9FFFE; }
-.mccolor-gray { color: #474F52; }
-.mccolor-light_gray { color: #9D9D97; }
-.mccolor-black { color: #1D1D21; }
+@each $colour, $data in $dye-colours {
+    .mccolor-#{$colour} {
+        color: map.get($data, "dye");
+
+        &.mcglow-1 {
+            text-shadow:
+                    0 0 5px map.get($data, "edge"), 0 0 5px map.get($data, "edge"), 0 0 5px map.get($data, "edge"),
+                    0 0 5px map.get($data, "edge"), 0 0 6px map.get($data, "edge"), 0 0 6px map.get($data, "edge");
+            color: map.get($data, "glow");
+        }
+    }
+}
+
+
+/* Custom JSON text data */
+.mctext-black { color: #000000; }
+.mctext-dark_blue { color: #0000AA; }
+.mctext-dark_green { color: #00AA00; }
+.mctext-dark_aqua { color: #00AAAA; }
+.mctext-dark_red { color: #AA0000; }
+.mctext-dark_purple { color: #AA00AA; }
+.mctext-gold { color: #FFAA00; }
+.mctext-gray { color: #AAAAAA; }
+.mctext-dark_gray { color: #555555; }
+.mctext-blue { color: #5555FF; }
+.mctext-green { color: #55FF55; }
+.mctext-aqua { color: #55FFFF; }
+.mctext-red { color: #FF5555; }
+.mctext-light_purple { color: #FF55FF; }
+.mctext-yellow { color: #FFFF55; }
+.mctext-white { color: #FFFFFF; }
+
+.mctext-bold { font-weight: bolder; }
+.mctext-italic { font-style: italic; }
+.mctext-underlined { text-decoration: underline;}
+.mctext-strikethrough { text-decoration: line-through;}
+.mctext-strikethrough.mctext-underlined { text-decoration: line-through underline;}
 
 .infoWindow-entity-wrapper {
     display: flex;
