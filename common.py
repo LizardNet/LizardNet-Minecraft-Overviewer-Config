@@ -168,6 +168,7 @@ def format_sign(poi, title, note, include_first_line=False):
             hover.insert(0, title)
 
         info_window_text = title_html
+        front_lines_text = ""
 
         if front_lines:
             # Annoyingly, we need to account here for both the old and new sign formats
@@ -178,7 +179,7 @@ def format_sign(poi, title, note, include_first_line=False):
                 glowing = " mcglow-1" if poi.get("GlowingText", 0) == 1 else ""
                 colour = " mccolor-" + poi.get("Color", "black")
 
-            info_window_text += (
+            front_lines_text = (
                 '<div class="signtext mcpoi-'
                 + poi_type
                 + colour
@@ -187,19 +188,22 @@ def format_sign(poi, title, note, include_first_line=False):
                 + "<br />".join(front_lines)
                 + "</div><br />"
             )
+            info_window_text += front_lines_text
         if back_lines:
             # No need to account for the old sign format here, since old signs never have back text.
-            info_window_text += (
-                '<div class="signtext mcpoi-'
-                + poi_type
-                + " mccolor-"
-                + poi["back_text"]["color"]
-                + " mcglow-"
-                + str(poi["back_text"]["has_glowing_text"])
+
+            back_lines_text = (
+                '<div class="signtext mcpoi-' + poi_type
+                + " mccolor-" + poi["back_text"]["color"]
+                + " mcglow-" + str(poi["back_text"]["has_glowing_text"])
                 + '">'
                 + "<br />".join(back_lines)
                 + "</div><br />"
             )
+
+            if front_lines_text != back_lines_text:
+                # If the text is different front+back, then show both the back too.
+                info_window_text += back_lines_text
 
         coords = (
             "("
