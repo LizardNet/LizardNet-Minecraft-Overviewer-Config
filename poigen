@@ -14,6 +14,11 @@ jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", up
 
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py
 
+# Regenerate the web assets. This is done by mapgen automatically, so is unnecessary 99% of the time.
+# This is useful in cases where web assets are updated by an Overviewer upgrade, but a mapgen has not been run.
+# In any case, this should take a couple of seconds at most, so no harm in just running it anyway.
+/opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py --config=config.py --update-web-assets
+
 /opt/dart-sass/sass -s compressed icons/sprite.scss icons/sprite.css
 
 rm -r "${OVERVIEWER_OUTPUT_DIRECTORY}/custom-icons"

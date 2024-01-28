@@ -361,6 +361,10 @@ def player_icons(poi):
 
 def named_mob_filter(poi):
     if "CustomName" in poi and "Health" in poi:
+        # Skip any mobs which have been silenced by datapack
+        if poi.get('Silent', 0) == 1:
+            return None
+
         entity_id = poi['id'][len('minecraft:'):]
 
         poi['cssClass'] = 'mc-entity-' + entity_id
