@@ -1,3 +1,5 @@
+import json
+
 def overworld_marker_definitions():
     markers = [
         dict(name="Players", filterFunction=player_icons, checked=True),
@@ -128,10 +130,10 @@ def format_sign(poi, title, note, include_first_line=False):
             poi_type = "hanging" if poi["id"] == "minecraft:hanging_sign" else "normal"
 
             if "front_text" in poi:
-                front_lines = poi["front_text"]["messages"]
-                back_lines = poi["back_text"]["messages"]
+                front_lines = poi["front_text"]["messagesRaw"]
+                back_lines = poi["back_text"]["messagesRaw"]
             else:
-                front_lines = [poi["Text1"], poi["Text2"], poi["Text3"], poi["Text4"]]
+                front_lines = [poi["Text1Raw"], poi["Text2Raw"], poi["Text3Raw"], poi["Text4Raw"]]
                 back_lines = []
 
             if not include_first_line:
@@ -147,8 +149,8 @@ def format_sign(poi, title, note, include_first_line=False):
                         break
                 return lines
 
-            front_lines = trim_blank_lines(front_lines)
-            back_lines = trim_blank_lines(back_lines)
+            front_lines = trim_blank_lines([json_text_to_html(x) for x in front_lines])
+            back_lines = trim_blank_lines([json_text_to_html(x) for x in back_lines])
 
         else:
             poi_type = "none"
@@ -170,29 +172,21 @@ def format_sign(poi, title, note, include_first_line=False):
         if front_lines:
             # Annoyingly, we need to account here for both the old and new sign formats
             if "front_text" in poi:
-                info_window_text += (
-                    '<div class="signtext mcpoi-'
-                    + poi_type
-                    + " mccolor-"
-                    + poi["front_text"]["color"]
-                    + " mcglow-"
-                    + str(poi["front_text"]["has_glowing_text"])
-                    + '">'
-                    + "<br />".join(front_lines)
-                    + "</div><br />"
-                )
+                glowing = " mcglow-1" if poi["front_text"]["has_glowing_text"] == 1 else ""
+                colour = " mccolor-" + poi["front_text"]["color"]
             else:
-                info_window_text += (
-                    '<div class="signtext mcpoi-'
-                    + poi_type
-                    + " mccolor-"
-                    + poi.get("Color", "black")
-                    + " mcglow-"
-                    + str(poi.get("GlowingText", 0))
-                    + '">'
-                    + "<br />".join(front_lines)
-                    + "</div><br />"
-                )
+                glowing = " mcglow-1" if poi.get("GlowingText", 0) == 1 else ""
+                colour = " mccolor-" + poi.get("Color", "black")
+
+            info_window_text += (
+                '<div class="signtext mcpoi-'
+                + poi_type
+                + colour
+                + glowing
+                + '">'
+                + "<br />".join(front_lines)
+                + "</div><br />"
+            )
         if back_lines:
             # No need to account for the old sign format here, since old signs never have back text.
             info_window_text += (
@@ -373,7 +367,9 @@ def named_mob_filter(poi):
 
         window = '<div class="infoWindow-entity-wrapper">'
         window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
-        window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (poi["CustomName"], entity_id_to_mob(entity_id))
+        name_html = json_text_to_html(poi["CustomNameRaw"])
+        mob_name = entity_id_to_mob(entity_id)
+        window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
         return hover, window
 
@@ -460,3 +456,72 @@ def entity_id_to_mob(id):
     }
 
     return mapping.get(id, id)
+
+
+def json_text_to_html(json_text):
+    """
+    This is roughly based on the Overviewer Core function jsonText. The
+    warning from that function, copied below, also applies to this function.
+
+    The aforementioned warning reads as follows:
+
+    If you want to keep your stomach contents do not, under any circumstance,
+    read the body of the following function. You have been warned.
+    """
+
+    if json_text is None or json_text == "null":
+        return ""
+
+    json_text_colours = ["black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray",
+                         "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"]
+
+    if ((json_text.startswith('"') and json_text.endswith('"')) or
+            (json_text.startswith('{') and json_text.endswith('}'))):
+        try:
+            js = json.loads(json_text)
+        except ValueError:
+            return json_text
+
+        def parse_internal(input_value):
+            """
+            Input can be a list, object, or bare string.
+            https://minecraft.wiki/w/Raw_JSON_text_format
+            """
+            output_value = ""
+            if isinstance(input_value, list):
+                for extra in input_value:
+                    output_value += parse_internal(extra)
+            elif isinstance(input_value, dict):
+                css_class = 'mc-jsontext'
+                style_attr = ''
+
+                if 'color' in input_value:
+                    if input_value['color'] in json_text_colours:
+                        css_class += ' mctext-' + input_value['color']
+                    elif input_value['color'].startswith('#'):
+                        style_attr = 'style="color: %s"' % input_value['color']
+
+                if 'bold' in input_value and input_value['bold']:
+                    css_class += ' mctext-bold'
+                if 'italic' in input_value and input_value['italic']:
+                    css_class += ' mctext-italic'
+                if 'underlined' in input_value and input_value['underlined']:
+                    css_class += ' mctext-underlined'
+                if 'strikethrough' in input_value and input_value['strikethrough']:
+                    css_class += ' mctext-strikethrough'
+                if 'obfuscated' in input_value and input_value['obfuscated']:
+                    css_class += ' mctext-obfuscated'
+
+                output_value += '<span class="%s" %s>' % (css_class, style_attr)
+
+                if "text" in input_value:
+                    output_value += input_value["text"]
+                if "extra" in input_value:
+                    output_value += parse_internal(input_value["extra"])
+
+                output_value += "</span>"
+            elif isinstance(input_value, str):
+                output_value = input_value
+            return output_value
+
+        return parse_internal(js)
