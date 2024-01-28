@@ -9,6 +9,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/watcherTasks.xml
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -240,3 +241,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Ignore generated CSS files
+*.css.map
+*.css
+!icons/overviewer.css
+
+# Ignore any configuration files for local testing
+local.py
