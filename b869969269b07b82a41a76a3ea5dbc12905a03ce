@@ -16,6 +16,23 @@
       "message": "Code LGTM; once the current mapgen is done (and I\u0027ve disabled automatic mapgens for now to ensure I\u0027ll have a chance to do this), I\u0027ll do a test POIgen-only run to verify these changes before merging. (And I\u0027ll rebuild Overviewer first too of course.)",
       "revId": "b869969269b07b82a41a76a3ea5dbc12905a03ce",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f93665d7_9b1ff60f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-01-28T11:35:29Z",
+      "side": 1,
+      "message": "Tested successfully!",
+      "revId": "b869969269b07b82a41a76a3ea5dbc12905a03ce",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ]
 }
