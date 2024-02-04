@@ -500,6 +500,8 @@ def json_text_to_html(json_text):
                 css_class = 'mc-jsontext'
                 style_attr = ''
 
+                has_value = False
+
                 if 'color' in input_value:
                     if input_value['color'] in json_text_colours:
                         css_class += ' mctext-' + input_value['color']
@@ -519,12 +521,19 @@ def json_text_to_html(json_text):
 
                 output_value += '<span class="%s" %s>' % (css_class, style_attr)
 
-                if "text" in input_value:
+                if "text" in input_value and len(input_value["text"]) > 0:
                     output_value += input_value["text"]
-                if "extra" in input_value:
-                    output_value += parse_internal(input_value["extra"])
+                    has_value = True
+                if "extra" in input_value and len(input_value["extra"]) > 0:
+                    extra_bits = parse_internal(input_value["extra"])
+                    if extra_bits != "":
+                        output_value += extra_bits
+                        has_value = True
 
                 output_value += "</span>"
+
+                if not has_value:
+                    output_value = ""
             elif isinstance(input_value, str):
                 output_value = input_value
             return output_value
