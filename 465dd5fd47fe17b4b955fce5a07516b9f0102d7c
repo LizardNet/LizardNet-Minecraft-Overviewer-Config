@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef84c712_a435fb58",
+        "filename": "common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2024-02-04T14:49:13Z",
+      "side": 1,
+      "message": "Um... this doesn\u0027t account for if the front is glowing and the back is not though - that\u0027s a difference I want to be shown (the proposed change will show the front and back glowing if only the front is glowing).",
+      "parentUuid": "ad0e2a0d_f56bc875",
+      "revId": "465dd5fd47fe17b4b955fce5a07516b9f0102d7c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b25349b5_cbd51aaf",
         "filename": "common.py",
         "patchSetId": 2
