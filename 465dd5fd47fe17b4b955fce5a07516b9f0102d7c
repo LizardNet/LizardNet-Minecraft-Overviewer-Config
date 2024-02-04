@@ -89,6 +89,24 @@
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a04ee29b_cb1d89cb",
+        "filename": "common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2024-02-04T21:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f14165_c4e6c63b",
+      "revId": "465dd5fd47fe17b4b955fce5a07516b9f0102d7c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b25349b5_cbd51aaf",
@@ -102,6 +120,24 @@
       "writtenOn": "2024-02-04T05:59:03Z",
       "side": 1,
       "message": "Comment seems to describe the opposite case than in the `if` condition",
+      "revId": "465dd5fd47fe17b4b955fce5a07516b9f0102d7c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6bdcd5_c1e4e17d",
+        "filename": "common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2024-02-04T21:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b25349b5_cbd51aaf",
       "revId": "465dd5fd47fe17b4b955fce5a07516b9f0102d7c",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
