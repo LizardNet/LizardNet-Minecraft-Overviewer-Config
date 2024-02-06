@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7480b8f_095f1503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-02-06T08:30:33Z",
+      "side": 1,
+      "message": "Code looks good, will test alongside change 471 in a POIgen-only run. Exemplar sign that I\u0027ll use for testing is [this one of FlightTime\u0027s mining signs](https://mcmaps.fastlizard4.org/s2/#/8192/64/4453/-3/Bob/myrender).",
+      "revId": "270e62ed916b6aee634dd87add8592115ce59b42",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
