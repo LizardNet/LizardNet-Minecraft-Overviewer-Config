@@ -35,6 +35,8 @@ worlds[f"{world_name}_the_end"] = (
 outputdir = os.environ.get("OVERVIEWER_OUTPUT_DIRECTORY")
 customwebassets = os.environ.get("WORKSPACE") + "/assets"
 
+feature_flags['render_legacy_chunks'] = True
+
 if os.environ.get("IN_MAPGEN", 0):
     observer_list = [LoggingObserver(), JSObserver(outputdir=outputdir, minrefresh=10)]
 else:
