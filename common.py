@@ -461,6 +461,7 @@ def entity_id_to_mob(id):
         'bat': 'Bat',
         'bee': 'Bee',
         'blaze': 'Blaze',
+        'bogged': 'Bogged',
         'breeze': 'Breeze',
         'camel': 'Camel',
         'cat': 'Cat',
