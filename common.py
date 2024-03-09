@@ -39,6 +39,13 @@ def overworld_marker_definitions():
             checked=False,
             showIconInLegend=True
         ),
+        dict(
+            name="Graves",
+            filterFunction=graves_filter,
+            icon="custom-icons/player/marker_headstone.png",
+            checked=True,
+            showIconInLegend=True
+        ),
     ]
 
     return markers
@@ -68,6 +75,13 @@ def nether_marker_definitions():
             checked=False,
             showIconInLegend=True
         ),
+        dict(
+            name="Graves",
+            filterFunction=graves_filter,
+            icon="custom-icons/player/marker_headstone.png",
+            checked=True,
+            showIconInLegend=True
+        ),
     ]
 
 
@@ -86,6 +100,13 @@ def nether_roof_marker_definitions():
             filterFunction=named_mob_filter,
             icon="https://mcmaps.fastlizard4.org/ocelot.png",
             checked=False,
+            showIconInLegend=True
+        ),
+        dict(
+            name="Graves",
+            filterFunction=graves_filter,
+            icon="custom-icons/player/marker_headstone.png",
+            checked=True,
             showIconInLegend=True
         ),
     ]
@@ -120,6 +141,13 @@ def end_marker_definitions():
             filterFunction=named_mob_filter,
             icon="https://mcmaps.fastlizard4.org/ocelot.png",
             checked=False,
+            showIconInLegend=True
+        ),
+        dict(
+            name="Graves",
+            filterFunction=graves_filter,
+            icon="custom-icons/player/marker_headstone.png",
+            checked=True,
             showIconInLegend=True
         ),
     ]
@@ -358,10 +386,56 @@ def player_icons(poi):
         return "Last known location for %s" % poi["EntityId"]
 
 
+graves_cache = {}
+
+
+def graves_filter(poi):
+    if "CustomName" in poi and poi['id'] == 'minecraft:armor_stand' and 'graveHologram' in poi["Tags"]:
+        grave_uuid = [t for t in poi["Tags"] if t.startswith('graveHologramGraveUUID:')][0][23:]
+
+        # Shenanigans are afoot.
+        # Graves are actually represented by three marker armour stands plus a player head.
+        # The player head is on the block grid, so inaccessible to us in the genPOI run.
+        # We need to create a cache outside the POI run as we need to combine the three POIs into one.
+        # Luckily, each armor stand has a tag with a UUID representing which grave it belongs to.
+        if grave_uuid not in graves_cache:
+            graves_cache[grave_uuid] = ["", "", "", ""]
+
+        if poi["CustomName"].endswith("'s Grave"):
+            graves_cache[grave_uuid][0] = poi["CustomNameRaw"]
+            graves_cache[grave_uuid][3] = poi["CustomName"]  # for the hover text
+        elif poi["CustomName"].startswith("Death: "):
+            graves_cache[grave_uuid][2] = poi["CustomNameRaw"]
+        else:
+            graves_cache[grave_uuid][1] = poi["CustomNameRaw"]
+
+        if not all(graves_cache[grave_uuid]):
+            return None
+
+        hover = graves_cache[grave_uuid][3]
+
+        window = '<div class="infoWindow-grave-wrapper">'
+        window += '<div class="infoWindow-grave-overlay">'
+        line1 = json_text_to_html(graves_cache[grave_uuid][0])
+        line2 = json_text_to_html(graves_cache[grave_uuid][1])
+        line3 = json_text_to_html(graves_cache[grave_uuid][2])
+
+        window += '<div class="infoWindow-grave-text"><h4>%s</h4><div>%s</div><div>%s</div></div>' % (line1, line2, line3)
+
+        window += '</div>'  # overlay
+        window += '</div>'  # wrapper
+
+        return hover, window
+
+
 def named_mob_filter(poi):
     if "CustomName" in poi and "Health" in poi:
         # Skip any mobs which have been silenced by datapack
         if poi.get('Silent', 0) == 1:
+            return None
+
+        # Ignore marker armour stands (ie, graves)
+        if poi['id'] == 'minecraft:armor_stand' and poi.get('Marker', 0) == 1:
             return None
 
         entity_id = poi['id'][len('minecraft:'):]
@@ -377,6 +451,7 @@ def named_mob_filter(poi):
         window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
         return hover, window
+
 
 def entity_id_to_mob(id):
     mapping = {

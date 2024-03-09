@@ -312,18 +312,52 @@ $dye-colours: (
     color: transparent;
 }
 
-.infoWindow-entity-wrapper {
+.infoWindow-entity-wrapper, .infoWindow-grave-wrapper {
     display: flex;
     flex-direction: row;
 }
 
-.infoWindow-entity-text {
+.infoWindow-entity-text, .infoWindow-grave-text {
     display: flex;
     flex-direction: column;
-    margin-left: 10px
+    margin-left: 10px;
+
+    h4 {
+        margin-top: 0px;
+        margin-bottom: 3px;
+    }
 }
 
-.infoWindow-entity-text h4 {
-    margin-top: 0px;
-    margin-bottom: 3px;
+$grave_width: 190px;
+$grave_height: 150px;
+
+.infoWindow-grave-wrapper {
+    background-image: url(./stone.png);
+    background-size: 50%;
+    image-rendering: pixelated;
+
+    border: 0 white;
+    border-radius: 40px 40px 0 0;
+}
+
+.infoWindow-grave-wrapper {
+    width: $grave_width;
+    height: $grave_height;
+
+    .infoWindow-grave-overlay{
+        background-color: rgba(255, 255, 255, 0.50);
+        width: 100%;
+
+        .infoWindow-grave-text {
+            font-family: "Minecraft";
+            white-space: nowrap;
+            text-align: center;
+            margin: 30px 10px 40px;
+
+            .mctext-white {
+                // artistic license.
+                @extend .mctext-black;
+            }
+        }
+    }
 }
