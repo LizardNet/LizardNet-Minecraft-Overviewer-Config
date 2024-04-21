@@ -1,4 +1,5 @@
 import json
+import logging
 
 
 def overworld_marker_definitions():
@@ -26,11 +27,20 @@ def overworld_marker_definitions():
             showIconInLegend=True,
         ),
         dict(
+            # To be removed once the Railways filter has been fully implemented
             name="Transport",
             filterFunction=fastlizard_transport_sign_filter,
             icon="custom-icons/transport/marker_train.png",
             checked=True,
             showIconInLegend=True,
+        ),
+        dict(
+            name="Railways",
+            filterFunction=fastlizard_rail_line_filter,
+            icon="custom-icons/transport/marker_train.png",
+            checked=False,
+            showIconInLegend=True,
+            postProcessFunction=fastlizard_rail_line_postprocess
         ),
         dict(
             name="Named mobs",
@@ -369,6 +379,117 @@ def fastlizard_transport_sign_filter(poi):
             return None  # Return nothing; sign is private
 
 
+def fastlizard_rail_line_filter(poi):
+    """
+    POI filter function for handling rail line overlays.
+
+    This filter function does the per-POI setup for rendering the overlay. This includes parsing the sign data and
+    passing the required data in a sensible format on to the postprocess function. This filter func should only return
+    valid railway marker data, with anything that's detected as not valid railway marker discarded. We don't draw the
+    railway lines here, but we do prepare the station signs for rendering.
+    """
+    # This is new map functionality in 1.20, so we only care about "new" sign formats.
+    if poi["id"] == 'minecraft:sign' and 'front_text' in poi:
+        marker_type = poi['front_text']['messages'][0].strip()
+
+        # only trigger on specific markers
+        if marker_type in ['#[RAIL]', '#[RAIL STATION]']:
+            try:
+                # line 3 is a config line. Either a colour, or a sequence number. Need not be monotonic nor positive.
+                config_line = poi['front_text']['messages'][3].strip()
+
+                i, dx, dy, dz = config_line.split('/')
+                dx = int_or_default(dx, 0)
+                dy = int_or_default(dy, 0)
+                dz = int_or_default(dz, 0)
+                sequence = int_or_default(i, 0)
+                line_colour = i if int_or_default(i, None) is None else None
+
+                path = ' '.join([poi['front_text']['messages'][1], poi['front_text']['messages'][2]]).strip()
+
+                extra = dict({
+                    'type': marker_type,
+                    'path': path,
+                    'sequence': sequence,
+                    'colour': line_colour,
+                    'dx': dx,
+                    'dy': dy,
+                    'dz': dz,
+                })
+
+                data = dict({
+                    'extra': extra
+                })
+
+                if marker_type == '#[RAIL STATION]':
+                    poi['front_text']['messagesRaw'] = []
+                    note = 'This station is on the <strong>' + path + '</strong><br /><br />'
+
+                    data['hovertext'], data['text'] = format_sign(poi, 'Rail Station', note, include_first_line=True)
+
+                return data
+            except Exception as e:
+                # Something's gone wrong. This is user-submitted data in a very specific format so it's likely to go
+                # horribly wrong at some point. This will log the specific issue and the coordinates of the sign, and
+                # just carry on with the next point without killing the render.
+                logging.warning("Unable to process rail marker at [%d, %d, %d]: %s", poi['x'], poi['y'], poi['z'], e)
+
+
+def fastlizard_rail_line_postprocess(pois):
+    """
+    This function post-processes every dimension's set of railway markers.
+
+    We receive a set of POIs with augmented data from `fastlizard_rail_line_filter(...)` and adapt it into something
+    we can render. There's two sorts of POI we can receive - a rail marker, and a station marker.
+
+    All rail and station markers are combined into a single polyline POI per railway line, so this function will
+    consume, for example:
+        8 RAIL POIs and 2 STATION POIs for line A (total 10)
+        16 RAIL POIs and 4 STATION POIs for line B (total 20)
+        12 RAIL POIs and 3 STATION POIs for line C (total 15)
+    and it will output:
+        2 STATION marker POIs and 1 polyline POI consisting of 10 points for line A
+        4 STATION marker POIs and 1 polyline POI consisting of 20 points for line B
+        3 STATION marker POIs and 1 polyline POI consisting of 15 points for line C
+
+    """
+    lines = dict()
+
+    extra_markers = []
+
+    for poi in sorted(pois, key=lambda x: x['extra']['sequence']):
+        if poi['extra']['type'] == '#[RAIL STATION]':
+            # Stations are rendered twice. Once as a rail waypoint (a polyline point), and once as a station marker.
+            # Here we copy the POI and remove the extra data, and pass it on as any other marker.
+            # The original copy is still dealt with as a waypoint below.
+            station_marker = poi.copy()
+            del station_marker['extra']
+            extra_markers.append(station_marker)
+
+        if poi['extra']['path'] not in lines:
+            lines[poi['extra']['path']] = dict({
+                'strokeColor': '#000000',
+                'strokeWeight': 4,
+                'fill': False,
+                'isLine': True,
+                'points': list(),
+                'createInfoWindow': True,
+                'text': '<strong>Railway Line</strong><br />' + poi['extra']['path'],
+                'hovertext': poi['extra']['path']
+            })
+
+        lines[poi['extra']['path']]['points'].append({
+            'x': poi['x'] + poi['extra']['dx'],
+            'y': poi['y'] + poi['extra']['dy'],
+            'z': poi['z'] + poi['extra']['dz']
+        })
+
+        if poi['extra']['colour'] is not None and poi['extra']['colour'].strip() != '':
+            lines[poi['extra']['path']]['strokeColor'] = poi['extra']['colour'].strip()
+
+    return list(lines.values()) + extra_markers
+
+
 def portal_sign_filter(poi, roof=None):
     if roof is True and poi["y"] < 127:
         return None
@@ -615,3 +736,10 @@ def json_text_to_html(json_text):
             return output_value
 
         return parse_internal(js)
+
+
+def int_or_default(i, default):
+    try:
+        return int(i)
+    except ValueError:
+        return default
