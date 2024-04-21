@@ -26,11 +26,20 @@ def overworld_marker_definitions():
             showIconInLegend=True,
         ),
         dict(
+            # To be removed once the Railways filter has been fully implemented
             name="Transport",
             filterFunction=fastlizard_transport_sign_filter,
             icon="custom-icons/transport/marker_train.png",
             checked=True,
             showIconInLegend=True,
+        ),
+        dict(
+            name="Railways",
+            filterFunction=fastlizard_rail_line_filter,
+            icon="custom-icons/transport/marker_train.png",
+            checked=False,
+            showIconInLegend=True,
+            postProcessFunction=fastlizard_rail_line_postprocess
         ),
         dict(
             name="Named mobs",
@@ -367,6 +376,70 @@ def fastlizard_transport_sign_filter(poi):
             return format_sign(poi, "Minecart Station", None, include_first_line=True)
         else:
             return None  # Return nothing; sign is private
+
+
+def fastlizard_rail_line_filter(poi):
+    # This is new map functionality in 1.20, so we only care about "new" sign formats.
+    if poi["id"] == 'minecraft:sign' and 'front_text' in poi:
+        marker_type = poi['front_text']['messages'][0].strip()
+
+        # only trigger on specific markers
+        if marker_type in ['#[RAIL]', '#[RAIL STATION]']:
+            # line 3 is a config line. Either a colour, or a sequence number. Need not be monotonic nor positive.
+            config_line = poi['front_text']['messages'][3].strip()
+
+            sequence_parse = int(config_line) if config_line.isdecimal() else None
+            path = ' '.join([poi['front_text']['messages'][1], poi['front_text']['messages'][2]]).strip()
+
+            extra = dict({
+                'type': marker_type,
+                'path': path,
+                'sequence': 0 if sequence_parse is None else sequence_parse,
+                'colour': config_line if sequence_parse is None else '',
+            })
+
+            data = dict({
+                'extra': extra
+            })
+
+            if marker_type == '#[RAIL STATION]':
+                poi['front_text']['messagesRaw'] = []
+                note = '' + path + '<br /><br />'
+
+                data['hovertext'], data['text'] = format_sign(poi, "Rail Station", note, include_first_line=True)
+
+            return data
+
+
+def fastlizard_rail_line_postprocess(pois):
+    lines = dict()
+
+    extraMarkers = []
+
+    for poi in sorted(pois, key=lambda x: x['extra']['sequence']):
+        if poi['extra']['type'] == '#[RAIL STATION]':
+            del poi['extra']
+            extraMarkers.append(poi)
+            continue
+
+        if poi['extra']['path'] not in lines:
+            lines[poi['extra']['path']] = dict({
+                "strokeColor": "#000000",
+                "strokeWeight": 4,
+                "fill": False,
+                "isLine": True,
+                "points": list(),
+                "createInfoWindow": True,
+                "text": "<strong>Railway Line</strong><br />" + poi['extra']['path'],
+                "hovertext": poi['extra']['path']
+            })
+
+        lines[poi['extra']['path']]["points"].append({"x": poi["x"], "y": poi["y"] + 1, "z": poi["z"]})
+
+        if poi['extra']['colour'] is not None and poi['extra']['colour'].strip() != '':
+            lines[poi['extra']['path']]["strokeColor"] = poi['extra']['colour'].strip()
+
+    return list(lines.values()) + extraMarkers
 
 
 def portal_sign_filter(poi, roof=None):
