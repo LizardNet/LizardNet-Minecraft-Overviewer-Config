@@ -432,7 +432,7 @@ def fastlizard_rail_line_filter(poi):
                 # Something's gone wrong. This is user-submitted data in a very specific format so it's likely to go
                 # horribly wrong at some point. This will log the specific issue and the coordinates of the sign, and
                 # just carry on with the next point without killing the render.
-                logging.warning("Unable to process rail marker at [%d, %d, %d]: %s", poi['x'], poi['y'], poi['z'], e)
+                logging.warning("Unable to process rail marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
 
 
 def fastlizard_rail_line_postprocess(pois):
