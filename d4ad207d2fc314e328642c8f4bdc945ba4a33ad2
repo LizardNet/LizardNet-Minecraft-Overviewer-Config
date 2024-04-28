@@ -33,6 +33,24 @@
       "message": "This won\u0027t include the type of the exception because Python, but it might be good to have that. In the interest of having this ready for games night tonight, I\u0027ll take care of this in a separate commit.",
       "revId": "d4ad207d2fc314e328642c8f4bdc945ba4a33ad2",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85bb46a8_98b42d64",
+        "filename": "common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-04-28T01:42:15Z",
+      "side": 1,
+      "message": "Resolved by [I73bb41e5f53be290ef1f527b1cf4b768857e0d41](https://gerrit.fastlizard4.org/r/c/LizardNet-Minecraft/Overviewer-Config/+/486).",
+      "parentUuid": "742b8c41_586ea5fd",
+      "revId": "d4ad207d2fc314e328642c8f4bdc945ba4a33ad2",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ],
   "submitRequirementResults": []
