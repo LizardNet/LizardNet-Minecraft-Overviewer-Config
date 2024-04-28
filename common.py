@@ -391,12 +391,15 @@ graves_cache = {}
 
 def graves_filter(poi):
     if "CustomName" in poi and poi['id'] == 'minecraft:armor_stand' and 'graveHologram' in poi["Tags"]:
+        # Extract the UUID of the grave from the armour stand tags
         grave_uuid = [t for t in poi["Tags"] if t.startswith('graveHologramGraveUUID:')][0][23:]
 
         # Shenanigans are afoot.
         # Graves are actually represented by three marker armour stands plus a player head.
         # The player head is on the block grid, so inaccessible to us in the genPOI run.
         # We need to create a cache outside the POI run as we need to combine the three POIs into one.
+        # The cache only needs to persist for the current chunk, but data volumes are low enough that we're lazy and
+        # persist it for the lifetime of the POI run.
         # Luckily, each armor stand has a tag with a UUID representing which grave it belongs to.
         if grave_uuid not in graves_cache:
             graves_cache[grave_uuid] = ["", "", "", ""]
@@ -410,6 +413,7 @@ def graves_filter(poi):
             graves_cache[grave_uuid][1] = poi["CustomNameRaw"]
 
         if not all(graves_cache[grave_uuid]):
+            # Not yet got complete data for this grave; skip for now and a later POI should complete it
             return None
 
         hover = graves_cache[grave_uuid][3]
