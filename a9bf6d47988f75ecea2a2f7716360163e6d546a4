@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30fa2c75_171a07ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-04-28T01:39:13Z",
+      "side": 1,
+      "message": "Self-review because yolo (and simple change). No testing required.",
+      "revId": "a9bf6d47988f75ecea2a2f7716360163e6d546a4",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
