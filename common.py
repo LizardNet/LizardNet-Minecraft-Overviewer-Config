@@ -576,6 +576,12 @@ def named_mob_filter(poi):
         window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
         return hover, window
+    elif 'Passengers' in poi:
+        # return the first named passenger
+        for el in poi['Passengers']:
+            r = named_mob_filter(el)
+            if r:
+                return r
 
 
 def entity_id_to_mob(id):
