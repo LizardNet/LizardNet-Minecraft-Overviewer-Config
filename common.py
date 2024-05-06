@@ -379,6 +379,11 @@ def fastlizard_transport_sign_filter(poi):
             return None  # Return nothing; sign is private
 
 
+RAIL_MARKER = '#[RAIL]'
+RAIL_STATION_MARKER = '#[RAIL STATION]'
+RAIL_MARKER_TYPES = {RAIL_MARKER, RAIL_STATION_MARKER}
+
+
 def fastlizard_rail_line_filter(poi):
     """
     POI filter function for handling rail line overlays.
@@ -388,51 +393,61 @@ def fastlizard_rail_line_filter(poi):
     valid railway marker data, with anything that's detected as not valid railway marker discarded. We don't draw the
     railway lines here, but we do prepare the station signs for rendering.
     """
+    if poi['id'] != 'minecraft:sign':
+        return
+
     # This is new map functionality in 1.20, so we only care about "new" sign formats.
-    if poi["id"] == 'minecraft:sign' and 'front_text' in poi:
-        marker_type = poi['front_text']['messages'][0].strip()
+    if 'front_text' in poi and poi['front_text']['messages'][0].strip() in RAIL_MARKER_TYPES:
+        marker_side = poi['front_text']
+        display_side = poi['back_text']
+    elif 'back_text' in poi and poi['back_text']['messages'][0].strip() in RAIL_MARKER_TYPES:
+        marker_side = poi['back_text']
+        display_side = poi['front_text']
+    else:
+        return
 
-        # only trigger on specific markers
-        if marker_type in ['#[RAIL]', '#[RAIL STATION]']:
-            try:
-                # line 3 is a config line. Either a colour, or a sequence number. Need not be monotonic nor positive.
-                config_line = poi['front_text']['messages'][3].strip()
+    marker_type = marker_side['messages'][0].strip()
 
-                i, dx, dy, dz = config_line.split('/')
-                dx = int_or_default(dx, 0)
-                dy = int_or_default(dy, 0)
-                dz = int_or_default(dz, 0)
-                sequence = int_or_default(i, 0)
-                line_colour = i if int_or_default(i, None) is None else None
+    try:
+        # line 3 is a config line. Either a colour, or a sequence number. Need not be monotonic nor positive.
+        config_line = marker_side['messages'][3].strip()
 
-                path = ' '.join([poi['front_text']['messages'][1], poi['front_text']['messages'][2]]).strip()
+        i, dx, dy, dz = config_line.split('/')
+        dx = int_or_default(dx, 0)
+        dy = int_or_default(dy, 0)
+        dz = int_or_default(dz, 0)
+        sequence = int_or_default(i, 0)
+        line_colour = i if int_or_default(i, None) is None else None
 
-                extra = dict({
-                    'type': marker_type,
-                    'path': path,
-                    'sequence': sequence,
-                    'colour': line_colour,
-                    'dx': dx,
-                    'dy': dy,
-                    'dz': dz,
-                })
+        path = ' '.join([marker_side['messages'][1], marker_side['messages'][2]]).strip()
 
-                data = dict({
-                    'extra': extra
-                })
+        extra = dict({
+            'type': marker_type,
+            'path': path,
+            'sequence': sequence,
+            'colour': line_colour,
+            'dx': dx,
+            'dy': dy,
+            'dz': dz,
+        })
 
-                if marker_type == '#[RAIL STATION]':
-                    poi['front_text']['messagesRaw'] = []
-                    note = 'This station is on the <strong>' + path + '</strong><br /><br />'
+        data = dict({
+            'extra': extra
+        })
 
-                    data['hovertext'], data['text'] = format_sign(poi, 'Rail Station', note, include_first_line=True)
+        if marker_type == RAIL_STATION_MARKER:
+            poi['front_text']['messagesRaw'] = display_side['messagesRaw']
+            poi['back_text']['messagesRaw'] = []
+            note = 'This station is on the <strong>' + path + '</strong><br /><br />'
 
-                return data
-            except Exception as e:
-                # Something's gone wrong. This is user-submitted data in a very specific format so it's likely to go
-                # horribly wrong at some point. This will log the specific issue and the coordinates of the sign, and
-                # just carry on with the next point without killing the render.
-                logging.warning("Unable to process rail marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
+            data['hovertext'], data['text'] = format_sign(poi, 'Rail Station', note, include_first_line=True)
+
+        return data
+    except Exception as e:
+        # Something's gone wrong. This is user-submitted data in a very specific format so it's likely to go
+        # horribly wrong at some point. This will log the specific issue and the coordinates of the sign, and
+        # just carry on with the next point without killing the render.
+        logging.warning("Unable to process rail marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
 
 
 def fastlizard_rail_line_postprocess(pois):
@@ -458,7 +473,7 @@ def fastlizard_rail_line_postprocess(pois):
     extra_markers = []
 
     for poi in sorted(pois, key=lambda x: x['extra']['sequence']):
-        if poi['extra']['type'] == '#[RAIL STATION]':
+        if poi['extra']['type'] == RAIL_STATION_MARKER:
             # Stations are rendered twice. Once as a rail waypoint (a polyline point), and once as a station marker.
             # Here we copy the POI and remove the extra data, and pass it on as any other marker.
             # The original copy is still dealt with as a waypoint below.
