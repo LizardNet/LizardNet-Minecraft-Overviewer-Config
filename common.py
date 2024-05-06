@@ -163,10 +163,14 @@ def end_marker_definitions():
     ]
 
 
+HANGING_SIGN_TYPE = 'minecraft:hanging_sign'
+SIGN_TYPES = {'minecraft:sign', HANGING_SIGN_TYPE}
+
+
 def format_sign(poi, title, note, include_first_line=False):
     try:
-        if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
-            poi_type = "hanging" if poi["id"] == "minecraft:hanging_sign" else "normal"
+        if poi["id"] in SIGN_TYPES:
+            poi_type = "hanging" if poi["id"] == HANGING_SIGN_TYPE else "normal"
 
             if "front_text" in poi:
                 front_lines = poi["front_text"]["messagesRaw"]
@@ -263,7 +267,7 @@ def format_sign(poi, title, note, include_first_line=False):
 
 
 def global_sign_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
+    if poi["id"] in SIGN_TYPES:
         return format_sign(poi, "Potato?", None, include_first_line=True)
 
 
@@ -293,9 +297,9 @@ def sign_explicit_visibility(front, back, char):
 
 
 def fastlizard_sign_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
+    if poi["id"] in SIGN_TYPES:
         front, back, all_text = get_sign_text(poi)
-        sign_type = "Hanging Sign" if poi["id"] == "minecraft:hanging_sign" else "Sign"
+        sign_type = "Hanging Sign" if poi["id"] == HANGING_SIGN_TYPE else "Sign"
 
         public = "claim" in all_text or "deathpile" in all_text
 
@@ -324,7 +328,7 @@ def fastlizard_sign_filter(poi):
 
 
 def fastlizard_house_sign_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
+    if poi["id"] in SIGN_TYPES:
         front, back, all_text = get_sign_text(poi)
 
         public = "home" in all_text or "house" in all_text or "outpost" in all_text
@@ -340,7 +344,7 @@ def fastlizard_house_sign_filter(poi):
 
 
 def fastlizard_fast_travel_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
+    if poi["id"] in SIGN_TYPES:
         front, back, all_text = get_sign_text(poi)
 
         public = "fast travel" in all_text or "faster travelling" in all_text
@@ -357,7 +361,7 @@ def fastlizard_fast_travel_filter(poi):
 
 
 def fastlizard_transport_sign_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
+    if poi["id"] in SIGN_TYPES:
         front, back, all_text = get_sign_text(poi)
 
         is_station = (
@@ -393,7 +397,7 @@ def fastlizard_rail_line_filter(poi):
     valid railway marker data, with anything that's detected as not valid railway marker discarded. We don't draw the
     railway lines here, but we do prepare the station signs for rendering.
     """
-    if poi['id'] != 'minecraft:sign':
+    if poi['id'] not in SIGN_TYPES:
         return
 
     # This is new map functionality in 1.20, so we only care about "new" sign formats.
