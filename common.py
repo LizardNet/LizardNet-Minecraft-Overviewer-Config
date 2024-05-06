@@ -412,6 +412,9 @@ def fastlizard_rail_line_filter(poi):
         # line 3 is a config line. Either a colour, or a sequence number. Need not be monotonic nor positive.
         config_line = marker_side['messages'][3].strip()
 
+        # pad with slashes to allow omitting trailing slashes
+        config_line = f'{config_line}///'
+
         i, dx, dy, dz = config_line.split('/')
         dx = int_or_default(dx, 0)
         dy = int_or_default(dy, 0)
