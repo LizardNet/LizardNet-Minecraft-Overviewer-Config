@@ -27,14 +27,6 @@ def overworld_marker_definitions():
             showIconInLegend=True,
         ),
         dict(
-            # To be removed once the Railways filter has been fully implemented
-            name="Transport",
-            filterFunction=fastlizard_transport_sign_filter,
-            icon="custom-icons/transport/marker_train.png",
-            checked=True,
-            showIconInLegend=True,
-        ),
-        dict(
             name="Railways",
             filterFunction=fastlizard_rail_line_filter,
             icon="custom-icons/transport/marker_train.png",
@@ -352,29 +344,6 @@ def fastlizard_fast_travel_filter(poi):
         elif public:
             poi["icon"] = "custom-icons/transport/marker_fasttravel.png"
             return format_sign(poi, "Fast Travel", None, include_first_line=True)
-        else:
-            return None  # Return nothing; sign is private
-
-
-def fastlizard_transport_sign_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
-        front, back, all_text = get_sign_text(poi)
-
-        is_station = (
-            "north line" in all_text
-            or "green line" in all_text
-            or "east line" in all_text
-            or "south line" in all_text
-            or "purple line" in all_text
-        )
-
-        if all_text == "":
-            return None  # Return nothing; sign is private
-        elif sign_explicit_visibility(front, back, "#"):
-            return None  # Return nothing; sign is private
-        elif sign_explicit_visibility(front, back, "@") and is_station:
-            poi["icon"] = "custom-icons/transport/marker_train.png"
-            return format_sign(poi, "Minecart Station", None, include_first_line=True)
         else:
             return None  # Return nothing; sign is private
 
