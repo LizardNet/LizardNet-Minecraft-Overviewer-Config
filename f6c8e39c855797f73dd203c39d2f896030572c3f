@@ -16,6 +16,24 @@
       "message": "The default sign text and CustomName data is in Minecraft\u0027s JSON-esque text format which isn\u0027t pleasant to deal with. Overviewer itself parses out the JSON text into a plain unformatted string, and that\u0027s what ends up in CustomName and the sign `messages` arrays. To allow configs to be formatting-aware and get the JSON-formatted text directly, Overviewer has \"Raw\" variants too which pass through the value from the NBT data unmodified.\n\nhttps://gerrit.fastlizard4.org/r/plugins/gitiles/LizardNet-Minecraft/Overviewer/+/refs/heads/lizardnet-main/overviewer_core/aux_files/genPOI.py#136 (see also the `jsonText()` and `signWrangler()` functions in that file too)\n\nOverviewer itself isn\u0027t smart enough to detect passengers either, so we need to also apply the bodge ourselves, as the Raw variants don\u0027t actually exist.\n\nI think something like this should work to sort most of the issues I saw in testing.\n\n```suggestion\n            if \"CustomName\" in el:\n                el[\"CustomNameRaw\"] \u003d el[\"CustomName\"]\n                # also:  from aux_files.genPOI import jsonText\n                el[\"CustomName\"] \u003d jsonText(el[\"CustomName\"])\n            r \u003d named_mob_filter(el)\n```\n\nThere\u0027s one more issue though, and that\u0027s to do with `poi[\"cssClass\"]` not being correctly set. It\u0027s set on the passenger entry instead of on the root POI, so the CSS class for the marker isn\u0027t set causing it to always render as an Ocelot. I don\u0027t have an idea offhand for how to fix that.",
       "revId": "f6c8e39c855797f73dd203c39d2f896030572c3f",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "909c9b59_2f49dc2a",
+        "filename": "common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2024-05-09T23:54:45Z",
+      "side": 1,
+      "message": "Thinking more about this, it\u0027s possible to return a dict from the filter function instead of a tuple of hovertext/window.\n\nSomething like this might work:\n```\nreturn {\n  \u0027text\u0027: window,\n  \u0027hovertext\u0027: hover,\n  \u0027cssClass\u0027: \u0027mc-entity-\u0027 + entity_id,\n}\n```",
+      "parentUuid": "518cf425_8b2177db",
+      "revId": "f6c8e39c855797f73dd203c39d2f896030572c3f",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ]
 }
