@@ -503,7 +503,7 @@ def portal_sign_filter(poi, roof=None):
 
 def player_icons(poi):
     if poi["id"] == "Player":
-        poi["icon"] = "https://overviewer.org/avatar/%s" % poi["EntityId"]
+        poi["icon"] = "./avatars/%s.png" % poi["EntityId"]
         return "Last known location for %s" % poi["EntityId"]
 
 
