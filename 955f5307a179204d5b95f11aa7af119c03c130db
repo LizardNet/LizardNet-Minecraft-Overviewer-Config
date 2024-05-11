@@ -16,6 +16,23 @@
       "message": "Looks like L235\u0027s avatar is missing potentially?",
       "revId": "955f5307a179204d5b95f11aa7af119c03c130db",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5b848b5_dea1f7c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-11T09:41:40Z",
+      "side": 1,
+      "message": "No testing required",
+      "revId": "955f5307a179204d5b95f11aa7af119c03c130db",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ]
 }
