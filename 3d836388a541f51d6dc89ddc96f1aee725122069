@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e7cfd0_86de49f2",
+        "filename": "common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-11T04:43:51Z",
+      "side": 1,
+      "message": "```suggestion\n        i, dx, dy, dz, *_ \u003d config_line.split(\u0027/\u0027)\n```\n\nProbably need to add something like this to discard the extra values for signs where offsets are specified. This will still require a minimum of four values but discard any extras.",
+      "revId": "3d836388a541f51d6dc89ddc96f1aee725122069",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
