@@ -1,3 +1,4 @@
+import copy
 import json
 import logging
 
@@ -405,11 +406,13 @@ def fastlizard_rail_line_filter(poi):
         })
 
         if marker_type == RAIL_STATION_MARKER:
-            poi['front_text']['messagesRaw'] = display_side['messagesRaw']
-            poi['back_text']['messagesRaw'] = []
+            # Construct a fake POI to run through format_string
+            fake_poi = copy.deepcopy(poi)
+            fake_poi['front_text'] = display_side
+            fake_poi['back_text']['messagesRaw'] = []
             note = 'This station is on the <strong>' + path + '</strong><br /><br />'
 
-            data['hovertext'], data['text'] = format_sign(poi, 'Rail Station', note, include_first_line=True)
+            data['hovertext'], data['text'] = format_sign(fake_poi, 'Rail Station', note, include_first_line=True)
 
         return data
     except Exception as e:
