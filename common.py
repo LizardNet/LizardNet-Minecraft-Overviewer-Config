@@ -1,4 +1,3 @@
-import copy
 import json
 import logging
 
@@ -406,13 +405,9 @@ def fastlizard_rail_line_filter(poi):
         })
 
         if marker_type == RAIL_STATION_MARKER:
-            # Construct a fake POI to run through format_string
-            fake_poi = copy.deepcopy(poi)
-            fake_poi['front_text'] = display_side
-            fake_poi['back_text']['messagesRaw'] = []
-            note = 'This station is on the <strong>' + path + '</strong><br /><br />'
-
-            data['hovertext'], data['text'] = format_sign(fake_poi, 'Rail Station', note, include_first_line=True)
+            station_name = ' '.join(display_side['messages']).strip()
+            extra['station'] = station_name
+            extra['text'] = display_side
 
         return data
     except Exception as e:
@@ -439,10 +434,12 @@ def fastlizard_rail_line_postprocess(pois):
         4 STATION marker POIs and 1 polyline POI consisting of 20 points for line B
         3 STATION marker POIs and 1 polyline POI consisting of 15 points for line C
 
+    It will *also* group stations with the identical names together to form a single "interchange" POI.
     """
     lines = dict()
 
-    extra_markers = []
+    raw_station_markers = dict()
+    station_markers = []
 
     for poi in sorted(pois, key=lambda x: x['extra']['sequence']):
         if poi['extra']['type'] == RAIL_STATION_MARKER:
@@ -450,8 +447,10 @@ def fastlizard_rail_line_postprocess(pois):
             # Here we copy the POI and remove the extra data, and pass it on as any other marker.
             # The original copy is still dealt with as a waypoint below.
             station_marker = poi.copy()
-            del station_marker['extra']
-            extra_markers.append(station_marker)
+            station_name = station_marker['extra']['station']
+            if station_name not in raw_station_markers:
+                raw_station_markers[station_name] = []
+            raw_station_markers[station_name].append(station_marker)
 
         if poi['extra']['path'] not in lines:
             lines[poi['extra']['path']] = dict({
@@ -474,7 +473,37 @@ def fastlizard_rail_line_postprocess(pois):
         if poi['extra']['colour'] is not None and poi['extra']['colour'].strip() != '':
             lines[poi['extra']['path']]['strokeColor'] = poi['extra']['colour'].strip()
 
-    return list(lines.values()) + extra_markers
+    for k, v in raw_station_markers.items():
+        if not v:
+            raise ValueError(f"No station markers found for station {k}")
+        elif len(v) == 1:
+            station_type = 'Rail Station'
+            x, y, z = (v[0]['x'], v[0]['y'], v[0]['z'])
+            note = f'<p class="rail-line">This station is on the <strong style="border-color:{lines[v[0]["extra"]["path"]]["strokeColor"]}">{v[0]["extra"]["path"]}</strong></p><br>'
+        else:
+            # More than one station with this name. Let's merge them.
+            station_type = 'Rail Interchange Station'
+            x, y, z = (
+                round(sum([p['x'] for p in v]) / len(v)),
+                round(sum([p['y'] for p in v]) / len(v)),
+                round(sum([p['z'] for p in v]) / len(v)))
+            ic_lines = ''.join(
+                [f'<li class="rail-line"><strong style="border-color:{lines[p["extra"]["path"]]["strokeColor"]}">{p["extra"]["path"]}</strong></li>'
+                 for p in v])
+            note = f'This station is an interchange between the following lines:<ul>{ic_lines}</ul>'
+
+        fake_poi = dict()
+        fake_poi['id'] = 'minecraft:sign'
+        fake_poi['x'], fake_poi['y'], fake_poi['z'] = (x, y, z)
+        fake_poi['front_text'] = v[0]['extra']['text']
+        fake_poi['back_text'] = dict({'messagesRaw': []})
+
+        fake_poi['hovertext'], fake_poi['text'] = format_sign(fake_poi, station_type, note, include_first_line=True)
+        del fake_poi['front_text'], fake_poi['back_text'], fake_poi['id']
+
+        station_markers.append(fake_poi)
+
+    return list(lines.values()) + station_markers
 
 
 def portal_sign_filter(poi, roof=None):
