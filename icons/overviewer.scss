@@ -361,3 +361,25 @@ $grave_height: 150px;
         }
     }
 }
+
+.leaflet-popup-content>ul {
+    margin-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+li.rail-line, p.rail-line {
+    margin-top: 0;
+    margin-bottom: 10px;
+    & > strong {
+        border-bottom: black 4px solid;
+        padding-right: 10px;
+        border-left: black 4px solid;
+        border-radius: 4px;
+        padding-left: 3px;
+    }
+
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+}
