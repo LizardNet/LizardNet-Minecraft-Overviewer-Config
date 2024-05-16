@@ -383,3 +383,35 @@ li.rail-line, p.rail-line {
     display: inline-block;
     margin-right: 10px;
 }
+
+.worldcontrol.leaflet-control select {
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 4px 4px 4px 7px;
+}
+
+#mcmap.night-render {
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip,
+    .leaflet-control-layers-expanded,
+    .leaflet-bar a,
+    .worldcontrol.leaflet-control select {
+        background-color: #3a3a3a;
+        color: #cccccc;
+        border-color: #888;
+    }
+    .leaflet-bar a.leaflet-disabled{
+        background-color: #282828;
+        color: #888;
+        border-color: #ccc;
+    }
+
+    .leaflet-control-attribution, .progress, .coordbox {
+        background-color: #3a3a3a;
+        color: #cccccc;
+
+        a {
+            color: #57b6e0
+        }
+    }
+}
