@@ -62,6 +62,7 @@ renders["myrender_night"] = {
     "markers": overworld_marker_definitions(),
     "rendermode": "smooth_night",
     "dimension": "overworld",
+    "globalClassName": "night-render",
     "imgformat": "jpeg",
     "imgquality": 90
     # "optimizeimg": [optipng(olevel=3)]
