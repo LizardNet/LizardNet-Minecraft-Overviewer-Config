@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94df7e99_ecd8dc94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-17T03:33:32Z",
+      "side": 1,
+      "message": "Small code suggestion, but otherwise LGTM. No further testing required here either.",
+      "revId": "e4ea0c4a69a62b2929c14c42522126201e0d5c26",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5062153_d963b4c2",
+        "filename": "common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-17T03:33:32Z",
+      "side": 1,
+      "message": "```suggestion\n        if not v:\n            raise ValueError(f\"No station markers found for station {k}\")\n        elif len(v) \u003d\u003d 1:\n            station_type \u003d \u0027Rail Station\u0027\n            x, y, z \u003d (v[0][\u0027x\u0027], v[0][\u0027y\u0027], v[0][\u0027z\u0027])\n            note \u003d f\u0027\u003cp class\u003d\"rail-line\"\u003eThis station is on the \u003cstrong style\u003d\"border-color:{lines[v[0][\"extra\"][\"path\"]][\"strokeColor\"]}\"\u003e{v[0][\"extra\"][\"path\"]}\u003c/strong\u003e\u003c/p\u003e\u003cbr\u003e\u0027\n        else:\n```\n\nSmall efficiency gain and robustness increase; this allows us to skip constructing values we won\u0027t use anyway for interchanges, and a bit more gracefully handles the edge case of a station having no markers defined.",
+      "range": {
+        "startLine": 477,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 22
+      },
+      "revId": "e4ea0c4a69a62b2929c14c42522126201e0d5c26",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
