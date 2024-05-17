@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31bcd632_544f787d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-17T03:57:46Z",
+      "side": 1,
+      "message": "LGTM and no testing required, but holding off on CR+2 until [change 497](https://gerrit.fastlizard4.org/r/c/LizardNet-Minecraft/Overviewer/+/497) is submitted.",
+      "revId": "fe2e75b6baf0dc9961e886564a77878c113e897c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7d39032_e08ed52a",
+        "filename": "config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-05-17T03:57:46Z",
+      "side": 1,
+      "message": "This will need to be updated if my feedback on [change 497](https://gerrit.fastlizard4.org/r/c/LizardNet-Minecraft/Overviewer/+/497) is adopted.",
+      "revId": "fe2e75b6baf0dc9961e886564a77878c113e897c",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
