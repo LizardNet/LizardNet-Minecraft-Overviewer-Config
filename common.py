@@ -473,35 +473,60 @@ def fastlizard_rail_line_postprocess(pois):
         if poi['extra']['colour'] is not None and poi['extra']['colour'].strip() != '':
             lines[poi['extra']['path']]['strokeColor'] = poi['extra']['colour'].strip()
 
-    for k, v in raw_station_markers.items():
-        if not v:
-            raise ValueError(f"No station markers found for station {k}")
-        elif len(v) == 1:
+    def register_station(x, y, z, station_type, note, front_text):
+        fake_poi = dict()
+        fake_poi['id'] = 'minecraft:sign'
+        fake_poi['x'], fake_poi['y'], fake_poi['z'] = (x, y, z)
+        fake_poi['front_text'] = front_text
+        fake_poi['back_text'] = dict({'messagesRaw': []})
+
+        fake_poi['hovertext'], fake_poi['text'] = format_sign(fake_poi, station_type, note, include_first_line=True)
+
+        del fake_poi['front_text'], fake_poi['back_text'], fake_poi['id']
+        station_markers.append(fake_poi)
+
+    single_station_message = '<p class="rail-line">This station is on the <strong style="border-color:%s">%s</strong></p><br>'
+
+    for station_name, pois in raw_station_markers.items():
+        poi_lines = [poi["extra"]["path"] for poi in pois]
+        has_dupe_lines = len(set(poi_lines)) != len(poi_lines)
+
+        if not pois:
+            raise ValueError(f"No station markers found for station {station_name}")
+        elif len(pois) == 1:
             station_type = 'Rail Station'
-            x, y, z = (v[0]['x'], v[0]['y'], v[0]['z'])
-            note = f'<p class="rail-line">This station is on the <strong style="border-color:{lines[v[0]["extra"]["path"]]["strokeColor"]}">{v[0]["extra"]["path"]}</strong></p><br>'
+            note = single_station_message % (lines[pois[0]["extra"]["path"]]["strokeColor"], pois[0]["extra"]["path"])
+
+            register_station(pois[0]['x'], pois[0]['y'], pois[0]['z'], station_type, note, pois[0]['extra']['text'])
+        elif station_name == "":
+            # Blank station names shouldn't ever be merged
+            logging.info("Not grouping %d stations without a name", len(pois))
+
+            station_type = 'Rail Station'
+            for poi in pois:
+                note = single_station_message % (lines[poi["extra"]["path"]]["strokeColor"], poi["extra"]["path"])
+                register_station(poi['x'], poi['y'], poi['z'], station_type, note, poi['extra']['text'])
+        elif has_dupe_lines:
+            # Multiple stations named the same thing on the same line is likely unintended.
+            logging.warning("Not grouping %d stations with the same name (%s) with duplicates on the same line", len(pois), station_name)
+
+            station_type = 'Rail Station'
+            for poi in pois:
+                note = single_station_message % (lines[poi["extra"]["path"]]["strokeColor"], poi["extra"]["path"])
+                register_station(poi['x'], poi['y'], poi['z'], station_type, note, poi['extra']['text'])
         else:
             # More than one station with this name. Let's merge them.
             station_type = 'Rail Interchange Station'
             x, y, z = (
-                round(sum([p['x'] for p in v]) / len(v)),
-                round(sum([p['y'] for p in v]) / len(v)),
-                round(sum([p['z'] for p in v]) / len(v)))
+                round(sum([p['x'] for p in pois]) / len(pois)),
+                round(sum([p['y'] for p in pois]) / len(pois)),
+                round(sum([p['z'] for p in pois]) / len(pois)))
             ic_lines = ''.join(
                 [f'<li class="rail-line"><strong style="border-color:{lines[p["extra"]["path"]]["strokeColor"]}">{p["extra"]["path"]}</strong></li>'
-                 for p in v])
+                 for p in pois])
             note = f'This station is an interchange between the following lines:<ul>{ic_lines}</ul>'
 
-        fake_poi = dict()
-        fake_poi['id'] = 'minecraft:sign'
-        fake_poi['x'], fake_poi['y'], fake_poi['z'] = (x, y, z)
-        fake_poi['front_text'] = v[0]['extra']['text']
-        fake_poi['back_text'] = dict({'messagesRaw': []})
-
-        fake_poi['hovertext'], fake_poi['text'] = format_sign(fake_poi, station_type, note, include_first_line=True)
-        del fake_poi['front_text'], fake_poi['back_text'], fake_poi['id']
-
-        station_markers.append(fake_poi)
+            register_station(x, y, z, station_type, note, pois[0]['extra']['text'])
 
     return list(lines.values()) + station_markers
 
