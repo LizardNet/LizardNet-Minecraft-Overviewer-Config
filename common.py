@@ -48,6 +48,13 @@ def overworld_marker_definitions():
             checked=True,
             showIconInLegend=True
         ),
+        dict(
+            name="All Allays",
+            filterFunction=all_allays_filter,
+            icon="custom-icons/marker_allay.png",
+            checked=False,
+            showIconInLegend=True
+        )
     ]
 
     return markers
@@ -677,6 +684,23 @@ ENTITY_NAMES = {
 }
 
 
+def _process_entity_poi(poi):
+    """Apply common processing to entity POIs.
+
+    **Do NOT mutate the ``poi`` parameter in this function.**"""
+    entity_id = poi['id'][len('minecraft:'):]
+
+    hover = "%s" % poi["CustomName"]
+
+    window = '<div class="infoWindow-entity-wrapper">'
+    window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
+    name_html = json_text_to_html(poi["CustomNameRaw"])
+    mob_name = ENTITY_NAMES.get(entity_id, entity_id)
+    window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
+
+    return hover, window, entity_id
+
+
 def named_mob_filter(poi):
     if "CustomName" in poi and "Health" in poi:
         # Skip any mobs which have been silenced by datapack
@@ -687,17 +711,18 @@ def named_mob_filter(poi):
         if poi['id'] == 'minecraft:armor_stand' and poi.get('Marker', 0) == 1:
             return None
 
-        entity_id = poi['id'][len('minecraft:'):]
+        hover, window, entity_id = _process_entity_poi(poi)
 
         poi['cssClass'] = 'mc-entity-' + entity_id
 
-        hover = "%s" % poi["CustomName"]
+        return hover, window
 
-        window = '<div class="infoWindow-entity-wrapper">'
-        window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
-        name_html = json_text_to_html(poi["CustomNameRaw"])
-        mob_name = ENTITY_NAMES.get(entity_id, entity_id)
-        window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
+
+def all_allays_filter(poi):
+    if poi.get('id') == 'minecraft:allay':
+        poi['cssClass'] = 'mc-entity-allay'
+
+        hover, window, _ = _process_entity_poi(poi)
 
         return hover, window
 
