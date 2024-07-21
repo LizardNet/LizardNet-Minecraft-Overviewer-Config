@@ -690,11 +690,16 @@ def _process_entity_poi(poi):
     **Do NOT mutate the ``poi`` parameter in this function.**"""
     entity_id = poi['id'][len('minecraft:'):]
 
-    hover = "%s" % poi["CustomName"]
+    hover = "%s" % (poi.get("CustomName") or entity_id)
 
     window = '<div class="infoWindow-entity-wrapper">'
     window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
-    name_html = json_text_to_html(poi["CustomNameRaw"])
+
+    if "CustomNameRaw" in poi:
+        name_html = json_text_to_html(poi["CustomNameRaw"])
+    else:
+        name_html = entity_id
+
     mob_name = ENTITY_NAMES.get(entity_id, entity_id)
     window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
