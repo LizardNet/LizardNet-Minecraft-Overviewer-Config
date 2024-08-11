@@ -703,6 +703,18 @@ def _process_entity_poi(poi):
     mob_name = ENTITY_NAMES.get(entity_id, entity_id)
     window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
+    coords = (
+            "("
+            + "X: "
+            + str(round(poi["x"]))
+            + ", Y: "
+            + str(round(poi["y"]))
+            + ", Z: "
+            + str(round(poi["z"]))
+            + ")"
+    )
+    window += coords
+
     return hover, window, entity_id
 
 
