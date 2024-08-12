@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59137091_18ad0112",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-08-12T06:38:39Z",
+      "side": 1,
+      "message": "Test run is in progress here: https://integration.fastlizard4.org:444/jenkins/job/minecraft-mapgen-do-s2/14081/console",
+      "revId": "79ecaa4f84644a2c3a383062704ebaa2ca77f400",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
