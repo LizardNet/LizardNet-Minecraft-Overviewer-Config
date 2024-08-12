@@ -703,17 +703,20 @@ def _process_entity_poi(poi):
     mob_name = ENTITY_NAMES.get(entity_id, entity_id)
     window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
-    coords = (
+    if "Pos" in poi:
+        # All entities should have a Pos tag where their position in the world is represented by three doubles in a list
+        # (for X, Y, and Z), but this is Minecraft, so you never know....
+        coords = (
             "("
             + "X: "
-            + str(round(poi["x"]))
+            + str(round(poi["Pos"][0]))
             + ", Y: "
-            + str(round(poi["y"]))
+            + str(round(poi["Pos"][1]))
             + ", Z: "
-            + str(round(poi["z"]))
+            + str(round(poi["Pos"][2]))
             + ")"
-    )
-    window += coords
+        )
+        window += coords
 
     return hover, window, entity_id
 
