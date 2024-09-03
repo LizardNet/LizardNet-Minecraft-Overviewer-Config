@@ -771,7 +771,7 @@ def json_text_to_html(json_text):
         except ValueError:
             return json_text
 
-        def parse_internal(input_value):
+        def parse_internal(input_value, colour, bold, italic, underlined, strikethrough, obfuscated):
             """
             Input can be a list, object, or bare string.
             https://minecraft.wiki/w/Raw_JSON_text_format
@@ -779,50 +779,93 @@ def json_text_to_html(json_text):
             output_value = ""
             if isinstance(input_value, list):
                 for extra in input_value:
-                    output_value += parse_internal(extra)
+                    output_value += parse_internal(extra, colour, bold, italic, underlined, strikethrough, obfuscated)
             elif isinstance(input_value, dict):
-                css_class = 'mc-jsontext'
-                style_attr = ''
-
                 has_value = False
 
                 if 'color' in input_value:
                     if input_value['color'] in json_text_colours:
-                        css_class += ' mctext-' + input_value['color']
+                        colour = input_value['color']
                     elif input_value['color'].startswith('#'):
-                        style_attr = 'style="color: %s"' % input_value['color']
-
-                if 'bold' in input_value and input_value['bold']:
-                    css_class += ' mctext-bold'
-                if 'italic' in input_value and input_value['italic']:
-                    css_class += ' mctext-italic'
-                if 'underlined' in input_value and input_value['underlined']:
-                    css_class += ' mctext-underlined'
-                if 'strikethrough' in input_value and input_value['strikethrough']:
-                    css_class += ' mctext-strikethrough'
-                if 'obfuscated' in input_value and input_value['obfuscated']:
-                    css_class += ' mctext-obfuscated'
-
-                output_value += '<span class="%s" %s>' % (css_class, style_attr)
+                        colour = input_value['color']
+                if 'bold' in input_value:
+                    bold = input_value['bold']
+                if 'italic' in input_value:
+                    italic = input_value['italic']
+                if 'underlined' in input_value:
+                    underlined = input_value['underlined']
+                if 'strikethrough' in input_value:
+                    strikethrough = input_value['strikethrough']
+                if 'obfuscated' in input_value:
+                    obfuscated = input_value['obfuscated']
 
                 if "text" in input_value and len(input_value["text"]) > 0:
-                    output_value += input_value["text"]
+                    output_value = style_text(input_value['text'], colour, bold, italic, underlined, strikethrough, obfuscated)
                     has_value = True
                 if "extra" in input_value and len(input_value["extra"]) > 0:
-                    extra_bits = parse_internal(input_value["extra"])
+                    extra_bits = parse_internal(input_value["extra"], colour, bold, italic, underlined, strikethrough, obfuscated)
                     if extra_bits != "":
                         output_value += extra_bits
                         has_value = True
 
-                output_value += "</span>"
-
                 if not has_value:
                     output_value = ""
             elif isinstance(input_value, str):
-                output_value = input_value
+                output_value = style_text(input_value, colour, bold, italic, underlined, strikethrough, obfuscated)
             return output_value
 
-        return parse_internal(js)
+        def style_text(text, colour, bold, italic, underlined, strikethrough, obfuscated):
+            if text is None or text == "":
+                # No text to render, no point wrapping it.
+                return ""
+
+            if colour is None and not bold and not italic and not underlined and not strikethrough and not obfuscated:
+                # plain text, just return as-is
+                return text
+
+            css_class = ''
+            style_attr = ''
+            output_value = ''
+            custom_colour = False
+
+            if colour is not None:
+                if colour in json_text_colours:
+                    css_class += ' mctext-' + colour
+                elif colour.startswith('#'):
+                    if not obfuscated:
+                        # we'll deal with obfuscated custom-coloured text separately.
+                        style_attr += 'color: %s;' % colour
+                    custom_colour = True
+            if bold:
+                css_class += ' mctext-bold'
+            if italic:
+                css_class += ' mctext-italic'
+            if underlined:
+                css_class += ' mctext-underlined'
+            if strikethrough:
+                css_class += ' mctext-strikethrough'
+            if obfuscated:
+                if not custom_colour:
+                    css_class += ' mctext-obfuscated'
+                else:
+                    # thanks, I hate it.
+                    style_attr += f'text-shadow: 0 0 6px {colour}, 0 0 6px {colour}, 0 0 6px {colour}, 0 0 6px {colour}, 0 0 8px {colour}, 0 0 8px {colour};color: transparent;'
+
+            if style_attr != '':
+                style_attr = f'style="{style_attr}"'
+
+            output_value += '<span class="%s" %s>' % (css_class.lstrip(), style_attr)
+            output_value += text
+            output_value += '</span>'
+
+            return output_value
+
+        parse_result = parse_internal(js, None, False, False, False, False, False)
+
+        if parse_result != "":
+            parse_result = f'<span class="mc-jsontext">{parse_result}</span>'
+
+        return parse_result
 
 
 def int_or_default(i, default):
