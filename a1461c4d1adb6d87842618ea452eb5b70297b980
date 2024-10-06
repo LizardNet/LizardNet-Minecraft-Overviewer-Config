@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f330334_6437605f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2024-10-06T05:13:23Z",
+      "side": 1,
+      "message": "Code LGTM, can\u0027t bother to test so just marking as verified",
+      "revId": "a1461c4d1adb6d87842618ea452eb5b70297b980",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
