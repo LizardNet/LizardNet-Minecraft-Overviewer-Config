@@ -179,9 +179,16 @@ img.ov-marker {
     padding: 0px 4px;
 }
 
-img.ov-marker-legend {
+div.ov-marker-legend {
     float: left;
     height: 20px;
+    min-width: 20px;
+
+    img {
+        height: 20px;
+        margin: 0 auto;
+        display: block;
+    }
 }
 
 .leaflet-control-layers label {
