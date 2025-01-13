@@ -7,6 +7,7 @@ import html
 import dateutil.parser
 import dateutil.utils
 
+from data import MOB_VARIANTS, ENTITY_NAMES
 
 def overworld_marker_definitions():
     markers = [
@@ -695,89 +696,6 @@ def graves_filter(poi):
         return hover, window
 
 
-ENTITY_NAMES = {
-    'allay': 'Allay',
-    'armadillo': 'Armadillo',
-    'axolotl': 'Axolotl',
-    'bat': 'Bat',
-    'bee': 'Bee',
-    'blaze': 'Blaze',
-    'bogged': 'Bogged',
-    'breeze': 'Breeze',
-    'camel': 'Camel',
-    'cat': 'Cat',
-    'cave_spider': 'Cave Spider',
-    'chicken': 'Chicken',
-    'cod': 'Cod',
-    'cow': 'Cow',
-    'creeper': 'Creeper',
-    'dolphin': 'Dolphin',
-    'donkey': 'Donkey',
-    'drowned': 'Drowned',
-    'elder_guardian': 'Elder Guardian',
-    'ender_dragon': 'Ender Dragon',
-    'enderman': 'Enderman',
-    'endermite': 'Endermite',
-    'evoker': 'Evoker',
-    'fox': 'Fox',
-    'frog': 'Frog',
-    'ghast': 'Ghast',
-    'glow_squid': 'Glow Squid',
-    'goat': 'Goat',
-    'guardian': 'Guardian',
-    'hoglin': 'Hoglin',
-    'horse': 'Horse',
-    'husk': 'Husk',
-    'illusioner': 'Illusioner',
-    'iron_golem': 'Iron Golem',
-    'llama': 'Llama',
-    'magma_cube': 'Magma Cube',
-    'mooshroom': 'Mooshroom',
-    'mule': 'Mule',
-    'ocelot': 'Ocelot',
-    'panda': 'Panda',
-    'parrot': 'Parrot',
-    'phantom': 'Phantom',
-    'pig': 'Pig',
-    'piglin_brute': 'Piglin Brute',
-    'piglin': 'Piglin',
-    'pillager': 'Pillager',
-    'polar_bear': 'Polar Bear',
-    'pufferfish': 'Pufferfish',
-    'rabbit': 'Rabbit',
-    'ravager': 'Ravager',
-    'salmon': 'Salmon',
-    'sheep': 'Sheep',
-    'shulker': 'Shulker',
-    'silverfish': 'Silverfish',
-    'skeleton_horse': 'Skeleton Horse',
-    'skeleton': 'Skeleton',
-    'slime': 'Slime',
-    'sniffer': 'Sniffer',
-    'snow_golem': 'Snow Golem',
-    'spider': 'Spider',
-    'squid': 'Squid',
-    'stray': 'Stray',
-    'strider': 'Strider',
-    'tadpole': 'Tadpole',
-    'trader_llama': 'Trader Llama',
-    'tropical_fish': 'Tropical Fish',
-    'turtle': 'Turtle',
-    'vex': 'Vex',
-    'villager': 'Villager',
-    'vindicator': 'Vindicator',
-    'wandering_trader': 'Wandering Trader',
-    'warden': 'Warden',
-    'witch': 'Witch',
-    'wither_skeleton': 'Wither Skeleton',
-    'wither': 'Wither',
-    'wolf': 'Wolf',
-    'zombie_villager': 'Zombie Villager',
-    'zombie': 'Zombie',
-    'zombified_piglin': 'Zombified Piglin',
-}
-
-
 def _process_entity_poi(poi):
     """Apply common processing to entity POIs.
 
@@ -786,8 +704,25 @@ def _process_entity_poi(poi):
 
     hover = "%s" % (html.escape(poi.get("CustomName") or entity_id))
 
+    variant = ''
+
+    # Double-filtering because we don't have sprites for all variants yet
+    if entity_id in MOB_VARIANTS and entity_id in ['pig', 'cow', 'chicken', 'sheep']:
+        entity_config = MOB_VARIANTS[entity_id]
+        variant = entity_config['default']
+
+        if entity_config['tag'] in poi:
+            variant_value = poi[entity_config['tag']]
+            if variant_value in entity_config['values']:
+                variant = entity_config['values'][variant_value]
+
+
+    augmented_entity_id = entity_id
+    if variant != '':
+        augmented_entity_id = entity_id + '_' + variant
+
     window = '<div class="infoWindow-entity-wrapper">'
-    window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
+    window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % augmented_entity_id
 
     if "CustomNameHtml" in poi:
         name_html = poi["CustomNameHtml"]
@@ -795,6 +730,8 @@ def _process_entity_poi(poi):
         name_html = entity_id
 
     mob_name = ENTITY_NAMES.get(entity_id, entity_id)
+    if variant != '':
+        mob_name = mob_name + ' (' + variant + ')'
     window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
     if "Pos" in poi:
@@ -812,7 +749,7 @@ def _process_entity_poi(poi):
         )
         window += coords
 
-    return hover, window, entity_id
+    return hover, window, augmented_entity_id
 
 
 def named_mob_filter(poi):
