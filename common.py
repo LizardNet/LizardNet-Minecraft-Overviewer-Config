@@ -682,7 +682,24 @@ ENTITY_NAMES = {
     'zombie': 'Zombie',
     'zombified_piglin': 'Zombified Piglin',
 }
-
+SHEEP_COLOURS = [
+    'white',
+    'orange',
+    'magenta',
+    'light_blue',
+    'yellow',
+    'lime',
+    'pink',
+    'gray',
+    'light_gray',
+    'cyan',
+    'purple',
+    'blue',
+    'brown',
+    'green',
+    'red',
+    'black'
+]
 
 def _process_entity_poi(poi):
     """Apply common processing to entity POIs.
@@ -692,8 +709,25 @@ def _process_entity_poi(poi):
 
     hover = "%s" % (poi.get("CustomName") or entity_id)
 
+    variant = ''
+
+    if entity_id in ['pig', 'cow']:
+        if 'variant' in poi:
+            variant = poi['variant'][len('minecraft:'):]
+        else:
+            variant = 'temperate'
+    elif entity_id == "sheep":
+        if 'Color' in poi:
+            variant = SHEEP_COLOURS[poi['Color']]
+        else:
+            variant = 'white'
+
+    augmented_entity_id = entity_id
+    if variant != '':
+        augmented_entity_id = entity_id + '_' + variant
+
     window = '<div class="infoWindow-entity-wrapper">'
-    window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
+    window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % augmented_entity_id
 
     if "CustomNameRaw" in poi:
         name_html = json_text_to_html(poi["CustomNameRaw"])
@@ -701,6 +735,8 @@ def _process_entity_poi(poi):
         name_html = entity_id
 
     mob_name = ENTITY_NAMES.get(entity_id, entity_id)
+    if variant != '':
+        mob_name = mob_name + ' (' + variant + ')'
     window += '<div class="infoWindow-entity-text"><h4>%s</h4><div>%s</div></div></div>' % (name_html, mob_name)
 
     if "Pos" in poi:
@@ -718,7 +754,7 @@ def _process_entity_poi(poi):
         )
         window += coords
 
-    return hover, window, entity_id
+    return hover, window, augmented_entity_id
 
 
 def named_mob_filter(poi):
