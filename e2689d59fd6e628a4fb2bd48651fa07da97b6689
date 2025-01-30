@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d0d6095_ccf08920",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16
+      },
+      "writtenOn": "2025-01-30T20:00:40Z",
+      "side": 1,
+      "message": "Don\u0027t merge until we\u0027re on 1.21.5 or later",
+      "revId": "e2689d59fd6e628a4fb2bd48651fa07da97b6689",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
