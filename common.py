@@ -389,9 +389,9 @@ def fastlizard_rail_line_filter(poi):
         config_line = marker_side['messages'][3].strip()
 
         # pad with slashes to allow omitting trailing slashes
-        config_line = f'{config_line}///'
+        config_line = f'{config_line}////'
 
-        i, dx, dy, dz, *_ = config_line.split('/')
+        i, dx, dy, dz, flags, *_ = config_line.split('/')
         dx = int_or_default(dx, 0)
         dy = int_or_default(dy, 0)
         dz = int_or_default(dz, 0)
@@ -408,6 +408,7 @@ def fastlizard_rail_line_filter(poi):
             'dx': dx,
             'dy': dy,
             'dz': dz,
+            'flags': flags,
         })
 
         data = dict({
@@ -448,8 +449,20 @@ def fastlizard_rail_line_postprocess(pois):
     """
     lines = dict()
 
+    # Colours apply across an entire line, set these outside of the segment code
+    line_colours = dict()
+    # Store the current segment for each part of the path
+    current_segment = dict()
+
     raw_station_markers = dict()
     station_markers = []
+
+    def get_segment_name(path_name):
+        if path_name not in current_segment:
+            current_segment[path_name] = 0
+
+        return f'{path_name}~s{current_segment[path_name]}'
+
 
     for poi in sorted(pois, key=lambda x: x['extra']['sequence']):
         if poi['extra']['type'] == RAIL_STATION_MARKER:
@@ -462,26 +475,52 @@ def fastlizard_rail_line_postprocess(pois):
                 raw_station_markers[station_name] = []
             raw_station_markers[station_name].append(station_marker)
 
-        if poi['extra']['path'] not in lines:
-            lines[poi['extra']['path']] = dict({
+        # End of segment; add this point to the old segment and bump the segment count
+        if 'X' in poi['extra']['flags']:
+            old_segment_name = get_segment_name(poi['extra']['path'])
+            lines[old_segment_name]['points'].append({
+                'x': poi['x'] + poi['extra']['dx'],
+                'y': poi['y'] + poi['extra']['dy'],
+                'z': poi['z'] + poi['extra']['dz']
+            })
+
+            current_segment[poi['extra']['path']] += 1
+
+        # Set up the new track segment
+        segment_name = get_segment_name(poi['extra']['path'])
+        if segment_name not in lines:
+            lines[segment_name] = dict({
+                '_pathName': poi['extra']['path'],
                 'strokeColor': '#000000',
                 'strokeWeight': 4,
                 'fill': False,
                 'isLine': True,
                 'points': list(),
                 'createInfoWindow': True,
-                'text': '<strong>Railway Line</strong><br />' + poi['extra']['path'],
-                'hovertext': poi['extra']['path']
             })
 
-        lines[poi['extra']['path']]['points'].append({
+        lines[segment_name]['points'].append({
             'x': poi['x'] + poi['extra']['dx'],
             'y': poi['y'] + poi['extra']['dy'],
             'z': poi['z'] + poi['extra']['dz']
         })
 
         if poi['extra']['colour'] is not None and poi['extra']['colour'].strip() != '':
-            lines[poi['extra']['path']]['strokeColor'] = poi['extra']['colour'].strip()
+            # Colours apply across an entire line, set these outside of the segment code
+            line_colours[poi['extra']['path']] = poi['extra']['colour'].strip()
+
+        if 'C' in poi['extra']['flags']:
+            lines[segment_name]['opacity'] = 0.5
+            lines[segment_name]['dashArray'] = "1 15"
+            lines[segment_name]['_construction'] = True
+
+        if 'D' in poi['extra']['flags']:
+            lines[segment_name]['strokeWeight'] = 5
+            lines[segment_name]['_tracks'] = 2
+
+        if 'S' in poi['extra']['flags']:
+            lines[segment_name]['strokeWeight'] = 2
+            lines[segment_name]['_tracks'] = 1
 
     def register_station(x, y, z, station_type, note, front_text):
         fake_poi = dict()
@@ -505,7 +544,7 @@ def fastlizard_rail_line_postprocess(pois):
             raise ValueError(f"No station markers found for station {station_name}")
         elif len(pois) == 1:
             station_type = 'Rail Station'
-            note = single_station_message % (lines[pois[0]["extra"]["path"]]["strokeColor"], pois[0]["extra"]["path"])
+            note = single_station_message % (line_colours[pois[0]["extra"]["path"]], pois[0]["extra"]["path"])
 
             register_station(pois[0]['x'], pois[0]['y'], pois[0]['z'], station_type, note, pois[0]['extra']['text'])
         elif station_name == "":
@@ -514,7 +553,7 @@ def fastlizard_rail_line_postprocess(pois):
 
             station_type = 'Rail Station'
             for poi in pois:
-                note = single_station_message % (lines[poi["extra"]["path"]]["strokeColor"], poi["extra"]["path"])
+                note = single_station_message % (line_colours[poi["extra"]["path"]], poi["extra"]["path"])
                 register_station(poi['x'], poi['y'], poi['z'], station_type, note, poi['extra']['text'])
         elif has_dupe_lines:
             # Multiple stations named the same thing on the same line is likely unintended.
@@ -522,7 +561,7 @@ def fastlizard_rail_line_postprocess(pois):
 
             station_type = 'Rail Station'
             for poi in pois:
-                note = single_station_message % (lines[poi["extra"]["path"]]["strokeColor"], poi["extra"]["path"])
+                note = single_station_message % (line_colours[poi["extra"]["path"]], poi["extra"]["path"])
                 register_station(poi['x'], poi['y'], poi['z'], station_type, note, poi['extra']['text'])
         else:
             # More than one station with this name. Let's merge them.
@@ -532,11 +571,33 @@ def fastlizard_rail_line_postprocess(pois):
                 round(sum([p['y'] for p in pois]) / len(pois)),
                 round(sum([p['z'] for p in pois]) / len(pois)))
             ic_lines = ''.join(
-                [f'<li class="rail-line"><strong style="border-color:{lines[p["extra"]["path"]]["strokeColor"]}">{p["extra"]["path"]}</strong></li>'
+                [f'<li class="rail-line"><strong style="border-color:{line_colours[p["extra"]["path"]]}">{p["extra"]["path"]}</strong></li>'
                  for p in pois])
             note = f'This station is an interchange between the following lines:<ul>{ic_lines}</ul>'
 
             register_station(x, y, z, station_type, note, pois[0]['extra']['text'])
+
+    # Apply the stored colours and text to each line
+    for l in lines:
+        path_name = lines[l]['_pathName']
+        lines[l]['strokeColor'] = line_colours[path_name]
+        lines[l]['hovertext'] = path_name
+
+        construction_text = ''
+        line_count_text = ''
+
+        if '_construction' in lines[l] and lines[l]['_construction']:
+            lines[l]['hovertext'] = f'{path_name} (Under construction)'
+            construction_text = '<div><em>Under Construction</em></div>'
+
+        if '_tracks' in lines[l]:
+            if lines[l]['_tracks'] == 2:
+                line_count_text = '<div>Duplex track</div>'
+            if lines[l]['_tracks'] == 1:
+                line_count_text = '<div>Simplex track</div>'
+
+        lines[l]['text'] = f'<strong>Railway Line</strong><br /><p class="rail-line" style="margin-top: 1rem"><strong style="border-color:{line_colours[path_name]}">{path_name}</strong></p>{construction_text}{line_count_text}'
+
 
     return list(lines.values()) + station_markers
 
