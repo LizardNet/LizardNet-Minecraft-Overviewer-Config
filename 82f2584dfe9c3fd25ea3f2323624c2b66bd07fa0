@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c15370fc_65d4db4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-02-23T08:41:15Z",
+      "side": 1,
+      "message": "LGTM, will test in prod",
+      "revId": "82f2584dfe9c3fd25ea3f2323624c2b66bd07fa0",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
