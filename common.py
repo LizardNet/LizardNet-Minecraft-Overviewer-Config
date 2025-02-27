@@ -1,5 +1,8 @@
 import json
 import logging
+import datetime
+import dateutil.parser
+import dateutil.utils
 
 
 def overworld_marker_definitions():
@@ -54,7 +57,15 @@ def overworld_marker_definitions():
             icon="custom-icons/marker_allay.png",
             checked=False,
             showIconInLegend=True
-        )
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
+            postProcessFunction=fastlizard_mcal_postprocess
+        ),
     ]
 
     return markers
@@ -809,6 +820,82 @@ def all_allays_filter(poi):
         hover, window, _ = _process_entity_poi(poi)
 
         return hover, window
+
+
+def fastlizard_mcal_filter(poi):
+    if poi['id'] != 'minecraft:sign':
+        return None
+
+    if poi['front_text']['messages'][0].strip() != '#mCal':
+        return None
+
+    try:
+        username = poi['front_text']['messages'][1].strip()
+        rawDate = poi['front_text']['messages'][2].strip()
+        if rawDate.startswith('Date:'):
+            rawDate = rawDate[len('Date:'):]
+        rawDate = rawDate.strip()
+
+        parsedDate = dateutil.parser.parse(rawDate, fuzzy=True)
+
+        # If specified date is Saturday, push it to Sunday
+        # This arbitrary decision is because UTC is the One True Timezone(tm).
+        if parsedDate.isoweekday() == 6:
+            parsedDate += datetime.timedelta(days=1)
+
+        # Skip past dates.
+        if parsedDate < dateutil.utils.today():
+            return None
+
+        rsvp = poi['front_text']['messages'][3].strip()
+        if rsvp.startswith('RSVP:'):
+            rsvp = rsvp[len('RSVP:'):]
+        rsvp = rsvp.strip()
+
+        extra = dict({
+            'username': username,
+            'date': parsedDate.date().isoformat(),
+            'rsvp': rsvp,
+        })
+
+        data = dict({
+            'extra': extra,
+        })
+
+        return data
+    except Exception as e:
+        logging.warning("Unable to process mCal marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
+
+
+def fastlizard_mcal_postprocess(pois):
+    by_date = dict()
+
+    for poi in pois:
+        if poi['extra']['date'] not in by_date:
+            by_date[poi['extra']['date']] = []
+        by_date[poi['extra']['date']].append(poi['extra'])
+
+    window = '<div class="icon-header"><img src="custom-icons/marker_calendar.png" alt=""><h2>Minecraft Calendar</h2></div>'
+    window += '<div class="mCal-container">'
+
+    for d in sorted(by_date.keys())[:4]:
+        dateParsed = dateutil.parser.parse(d).strftime('%a, %B %d')
+
+        window += f'<div class="mCal-date-entry"><h3>{dateParsed}</h3><dl>'
+        for poi in by_date[d]:
+            window+= f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
+        window += f'</dl></div>'
+    window += '</div>'
+
+    newPoi = dict({
+        'x': -101,
+        'y': 66,
+        'z': 182,
+        'hovertext': "Minecraft Calendaring and Scheduling Core Object Specification",
+        'text': window
+    })
+
+    return [newPoi]
 
 
 def json_text_to_html(json_text):
