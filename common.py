@@ -1,6 +1,8 @@
 import json
 import logging
 import datetime
+import os
+
 import dateutil.parser
 import dateutil.utils
 
@@ -870,22 +872,37 @@ def fastlizard_mcal_filter(poi):
 def fastlizard_mcal_postprocess(pois):
     by_date = dict()
 
+    vcal = "BEGIN:VCALENDAR\nVERSION:2.0\n"
+
     for poi in pois:
         if poi['extra']['date'] not in by_date:
             by_date[poi['extra']['date']] = []
         by_date[poi['extra']['date']].append(poi['extra'])
 
-    window = '<div class="icon-header"><img src="custom-icons/marker_calendar.png" alt=""><h2>Minecraft Calendar</h2></div>'
+    window = '<div class="icon-header"><img src="custom-icons/marker_calendar.png" alt=""><h2>Minecraft Calendar</h2><a href="Minecraft.ical">iCal</a></div>'
     window += '<div class="mCal-container">'
 
     for d in sorted(by_date.keys())[:4]:
-        dateParsed = dateutil.parser.parse(d).strftime('%a, %B %d')
+        dateParsed = dateutil.parser.parse(d)
+        dateDisplay = dateParsed.strftime('%a, %B %d')
 
-        window += f'<div class="mCal-date-entry"><h3>{dateParsed}</h3><dl>'
+        eventDescription = ""
+
+        window += f'<div class="mCal-date-entry"><h3>{dateDisplay}</h3><dl>'
         for poi in by_date[d]:
             window+= f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
+            eventDescription+= f'{poi["username"]}: {poi["rsvp"]}\\n'
         window += f'</dl></div>'
+
+        eventUid = f"minecraft{dateParsed.strftime('%Y%m%d')}@minecraft.fastlizard4.org"
+        now = datetime.datetime.now().strftime('%Y%m%dT%H%M%SZ')
+        vcal += f"BEGIN:VEVENT\nUID:{eventUid}\nDTSTART:{dateParsed.strftime('%Y%m%d')}T060000Z\nDTEND:{dateParsed.strftime('%Y%m%d')}T150000Z\nDTSTAMP:{now}\nSUMMARY:Minecraft\nDESCRIPTION:{eventDescription}\nEND:VEVENT\n"
     window += '</div>'
+
+    vcal += 'END:VCALENDAR\n'
+    f = open(os.environ.get("OVERVIEWER_OUTPUT_DIRECTORY") + '/Minecraft.ical', 'w')
+    f.write(vcal)
+    f.close()
 
     newPoi = dict({
         'x': -101,
