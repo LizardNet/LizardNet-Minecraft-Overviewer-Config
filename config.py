@@ -44,6 +44,7 @@ else:
 
 observer = MultiplexingObserver(*observer_list)
 
+attribution = '<a href="https://mapicons.mapsmarker.com">Map Icons Collection</a>'
 
 renders["myrender"] = {
     "world": world_name,
