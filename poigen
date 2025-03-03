@@ -12,6 +12,9 @@ ORIGINAL_MESSAGE=${ORIGINAL_MESSAGE%;*}
 
 jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", update: (60 * 1000), messageTime: '"$(date -u +%s)"'}' > "${OVERVIEWER_OUTPUT_DIRECTORY}/progress.json"
 
+ln -sf ${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata ${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata
+ln -sf ${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata ${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata
+
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py
 
 # Regenerate the web assets. This is done by mapgen automatically, so is unnecessary 99% of the time.

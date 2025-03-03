@@ -246,4 +246,4 @@ cython_debug/
 *.css
 
 # Ignore any configuration files for local testing
-local.py
+local*
