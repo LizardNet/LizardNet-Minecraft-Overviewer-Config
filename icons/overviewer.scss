@@ -310,42 +310,40 @@ $json-colours: (
         "white": #FFFFFF,
 );
 
-.mc-jsontext {
-    .mctext-obfuscated {
-        text-shadow: 0 0 6px black, 0 0 6px black, 0 0 6px black, 0 0 6px black, 0 0 8px black, 0 0 8px black;
+.mctext-obfuscated {
+    text-shadow: 0 0 6px black, 0 0 6px black, 0 0 6px black, 0 0 6px black, 0 0 8px black, 0 0 8px black;
+    color: transparent;
+}
+
+@each $colourName, $colourHex in $json-colours {
+    .mctext-#{$colourName} {
+        color: #{$colourHex};
+    }
+
+    .mctext-#{$colourName}.mctext-obfuscated {
+        text-shadow: 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 8px #{$colourHex}, 0 0 8px #{$colourHex};
         color: transparent;
     }
+}
 
-    @each $colourName, $colourHex in $json-colours {
-        .mctext-#{$colourName} {
-            color: #{$colourHex};
-        }
+.mctext-bold {
+    font-weight: bolder;
+}
 
-        .mctext-#{$colourName}.mctext-obfuscated {
-            text-shadow: 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 6px #{$colourHex}, 0 0 8px #{$colourHex}, 0 0 8px #{$colourHex};
-            color: transparent;
-        }
-    }
+.mctext-italic {
+    font-style: italic;
+}
 
-    .mctext-bold {
-        font-weight: bolder;
-    }
+.mctext-underlined {
+    text-decoration: underline;
+}
 
-    .mctext-italic {
-        font-style: italic;
-    }
+.mctext-strikethrough {
+    text-decoration: line-through;
+}
 
-    .mctext-underlined {
-        text-decoration: underline;
-    }
-
-    .mctext-strikethrough {
-        text-decoration: line-through;
-    }
-
-    .mctext-strikethrough.mctext-underlined {
-        text-decoration: line-through underline;
-    }
+.mctext-strikethrough.mctext-underlined {
+    text-decoration: line-through underline;
 }
 
 .infoWindow-entity-wrapper, .infoWindow-grave-wrapper {
