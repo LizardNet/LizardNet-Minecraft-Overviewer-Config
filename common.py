@@ -104,6 +104,14 @@ def nether_marker_definitions():
             checked=True,
             showIconInLegend=True
         ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
+            postProcessFunction=fastlizard_mcal_postprocess
+        ),
     ]
 
 
@@ -171,6 +179,14 @@ def end_marker_definitions():
             icon="custom-icons/player/marker_headstone.png",
             checked=True,
             showIconInLegend=True
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
+            postProcessFunction=fastlizard_mcal_postprocess
         ),
     ]
 
@@ -872,7 +888,7 @@ def fastlizard_mcal_filter(poi):
 def fastlizard_mcal_postprocess(pois):
     by_date = dict()
 
-    vcal = "BEGIN:VCALENDAR\nVERSION:2.0\n"
+    vcal = ""
 
     for poi in pois:
         if poi['extra']['date'] not in by_date:
@@ -899,8 +915,7 @@ def fastlizard_mcal_postprocess(pois):
         vcal += f"BEGIN:VEVENT\nUID:{eventUid}\nDTSTART:{dateParsed.strftime('%Y%m%d')}T060000Z\nDTEND:{dateParsed.strftime('%Y%m%d')}T150000Z\nDTSTAMP:{now}\nSUMMARY:Minecraft\nDESCRIPTION:{eventDescription}\nEND:VEVENT\n"
     window += '</div>'
 
-    vcal += 'END:VCALENDAR\n'
-    f = open(os.environ.get("OVERVIEWER_OUTPUT_DIRECTORY") + '/Minecraft.ical', 'w')
+    f = open('Minecraft.ical_tmp', 'a')
     f.write(vcal)
     f.close()
 

@@ -15,7 +15,13 @@ jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", up
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata"
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata"
 
+rm -f Minecraft.ical_tmp
+echo -e "BEGIN:VCALENDAR\nVERSION:2.0" > Minecraft.ical_tmp
+
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py
+
+echo "END:VCALENDAR" >> Minecraft.ical_tmp
+mv Minecraft.ical_tmp "${OVERVIEWER_OUTPUT_DIRECTORY}/Minecraft.ical"
 
 # Regenerate the web assets. This is done by mapgen automatically, so is unnecessary 99% of the time.
 # This is useful in cases where web assets are updated by an Overviewer upgrade, but a mapgen has not been run.
