@@ -16,6 +16,29 @@
       "message": "Note that while I\u0027ve tested symlinking the playerdata folders works, I have *not* tested the change to this script does what I expect it to do. This is one we can probably fairly safely test in production.",
       "revId": "c38b100abf733f9b27edf8fba4cf59e657156cac",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57256dca_cc446f91",
+        "filename": "poigen",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-03-09T07:19:35Z",
+      "side": 1,
+      "message": "```suggestion\nln -sf \"${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata\" \"${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata\"\nln -sf \"${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata\" \"${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata\"\n```\n\nShould probably quote these in case the environment variables have spaces in them.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 118
+      },
+      "revId": "c38b100abf733f9b27edf8fba4cf59e657156cac",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ]
 }
