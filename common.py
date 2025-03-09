@@ -66,7 +66,6 @@ def overworld_marker_definitions():
             icon="custom-icons/marker_calendar.png",
             checked=True,
             showIconInLegend=True,
-            postProcessFunction=fastlizard_mcal_postprocess
         ),
     ]
 
@@ -104,6 +103,13 @@ def nether_marker_definitions():
             checked=True,
             showIconInLegend=True
         ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
+        ),
     ]
 
 
@@ -130,6 +136,13 @@ def nether_roof_marker_definitions():
             icon="custom-icons/player/marker_headstone.png",
             checked=True,
             showIconInLegend=True
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
         ),
     ]
 
@@ -171,6 +184,13 @@ def end_marker_definitions():
             icon="custom-icons/player/marker_headstone.png",
             checked=True,
             showIconInLegend=True
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
         ),
     ]
 
@@ -870,6 +890,9 @@ def fastlizard_mcal_filter(poi):
 
 
 def fastlizard_mcal_postprocess(pois):
+    """
+    Note: this postprocess function is called from the global postprocess handler, not from the usual regionset handler
+    """
     by_date = dict()
 
     vcal = "BEGIN:VCALENDAR\nVERSION:2.0\n"
@@ -887,11 +910,15 @@ def fastlizard_mcal_postprocess(pois):
         dateDisplay = dateParsed.strftime('%a, %B %d')
 
         eventDescription = ""
+        event_rsvps = []
 
         window += f'<div class="mCal-date-entry"><h3>{dateDisplay}</h3><dl>'
         for poi in by_date[d]:
-            window+= f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
-            eventDescription+= f'{poi["username"]}: {poi["rsvp"]}\\n'
+            this_rsvp = f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
+            if this_rsvp not in event_rsvps:
+                window += this_rsvp
+                event_rsvps.append(this_rsvp)
+                eventDescription+= f'{poi["username"]}: {poi["rsvp"]}\\n'
         window += f'</dl></div>'
 
         eventUid = f"minecraft{dateParsed.strftime('%Y%m%d')}@minecraft.fastlizard4.org"
@@ -1041,3 +1068,17 @@ def int_or_default(i, default):
         return int(i)
     except ValueError:
         return default
+
+def global_postprocess(markers):
+    mCal_group_names = [x for x in markers if markers[x]['name'] == 'mCalendar']
+
+    all_mCal_pois = []
+    for id in mCal_group_names:
+        all_mCal_pois.extend(markers[id]['raw'])
+
+    mCal_result = fastlizard_mcal_postprocess(all_mCal_pois)
+
+    for id in mCal_group_names:
+        markers[id]['raw'] = mCal_result
+
+    return markers
