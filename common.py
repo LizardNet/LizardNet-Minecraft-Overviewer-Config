@@ -845,48 +845,55 @@ def all_allays_filter(poi):
 
 
 def fastlizard_mcal_filter(poi):
-    if poi['id'] != 'minecraft:sign':
-        return None
-
-    if poi['front_text']['messages'][0].strip() != '#mCal':
+    # If anyone actually uses a hanging sigh for this...
+    if poi['id'] not in ['minecraft:sign', 'minecraft:hanging_sign']:
         return None
 
     try:
-        username = poi['front_text']['messages'][1].strip()
-        rawDate = poi['front_text']['messages'][2].strip()
-        if rawDate.startswith('Date:'):
-            rawDate = rawDate[len('Date:'):]
-        rawDate = rawDate.strip()
-
-        parsedDate = dateutil.parser.parse(rawDate, fuzzy=True)
-
-        # If specified date is Saturday, push it to Sunday
-        # This arbitrary decision is because UTC is the One True Timezone(tm).
-        if parsedDate.isoweekday() == 6:
-            parsedDate += datetime.timedelta(days=1)
-
-        # Skip past dates.
-        if parsedDate < dateutil.utils.today():
-            return None
-
-        rsvp = poi['front_text']['messages'][3].strip()
-        if rsvp.startswith('RSVP:'):
-            rsvp = rsvp[len('RSVP:'):]
-        rsvp = rsvp.strip()
-
-        extra = dict({
-            'username': username,
-            'date': parsedDate.date().isoformat(),
-            'rsvp': rsvp,
-        })
-
+        front_rsvp = extract_rsvp(poi['front_text'])
+        back_rsvp = extract_rsvp(poi['back_text'])
         data = dict({
-            'extra': extra,
+            'extra': [front_rsvp, back_rsvp],
         })
 
         return data
     except Exception as e:
         logging.warning("Unable to process mCal marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
+
+
+def extract_rsvp(sign_side):
+    if sign_side['messages'][0].strip() != '#mCal':
+        return None
+
+    username = sign_side['messages'][1].strip()
+    rawDate = sign_side['messages'][2].strip()
+    if rawDate.startswith('Date:'):
+        rawDate = rawDate[len('Date:'):]
+    rawDate = rawDate.strip()
+
+    parsedDate = dateutil.parser.parse(rawDate, fuzzy=True)
+
+    # If specified date is Saturday, push it to Sunday
+    # This arbitrary decision is because UTC is the One True Timezone(tm).
+    if parsedDate.isoweekday() == 6:
+        parsedDate += datetime.timedelta(days=1)
+
+    # Skip past dates.
+    if parsedDate < dateutil.utils.today():
+        return None
+
+    rsvp = sign_side['messages'][3].strip()
+    if rsvp.startswith('RSVP:'):
+        rsvp = rsvp[len('RSVP:'):]
+    rsvp = rsvp.strip()
+
+    data = dict({
+        'username': username,
+        'date': parsedDate.date().isoformat(),
+        'rsvp': rsvp,
+    })
+
+    return data
 
 
 def fastlizard_mcal_postprocess(pois):
@@ -898,9 +905,10 @@ def fastlizard_mcal_postprocess(pois):
     vcal = "BEGIN:VCALENDAR\nVERSION:2.0\n"
 
     for poi in pois:
-        if poi['extra']['date'] not in by_date:
-            by_date[poi['extra']['date']] = []
-        by_date[poi['extra']['date']].append(poi['extra'])
+        for i in [i for i in poi['extra'] if i is not None]:
+            if i['date'] not in by_date:
+                by_date[i['date']] = []
+            by_date[i['date']].append(i)
 
     window = '<div class="icon-header"><img src="custom-icons/marker_calendar.png" alt=""><h2>Minecraft Calendar</h2><a href="Minecraft.ical">iCal</a></div>'
     window += '<div class="mCal-container">'
