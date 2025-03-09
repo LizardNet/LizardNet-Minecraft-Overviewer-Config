@@ -6,6 +6,8 @@ import os
 import dateutil.parser
 import dateutil.utils
 
+from fasttravel import fast_travel_filter, fast_travel_postprocess
+
 
 def overworld_marker_definitions():
     markers = [
@@ -26,10 +28,11 @@ def overworld_marker_definitions():
         ),
         dict(
             name="Fast Travel",
-            filterFunction=fastlizard_fast_travel_filter,
+            filterFunction=fast_travel_filter,
             icon="custom-icons/transport/marker_fasttravel.png",
             checked=True,
             showIconInLegend=True,
+            postProcessFunction=fast_travel_postprocess,
         ),
         dict(
             name="Railways",
@@ -347,23 +350,6 @@ def fastlizard_house_sign_filter(poi):
             return None  # Return nothing; sign is private
         elif public:
             return format_sign(poi, "Player House", None, include_first_line=True)
-        else:
-            return None  # Return nothing; sign is private
-
-
-def fastlizard_fast_travel_filter(poi):
-    if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
-        front, back, all_text = get_sign_text(poi)
-
-        public = "fast travel" in all_text or "faster travelling" in all_text
-
-        if all_text == "":
-            return None  # Return nothing; sign is private
-        elif sign_explicit_visibility(front, back, "#"):
-            return None  # Return nothing; sign is private
-        elif public:
-            poi["icon"] = "custom-icons/transport/marker_fasttravel.png"
-            return format_sign(poi, "Fast Travel", None, include_first_line=True)
         else:
             return None  # Return nothing; sign is private
 

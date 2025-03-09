@@ -1,0 +1,163 @@
+{
+  "floors": [
+    {
+      "name": "Main Floor",
+      "colour": "#141313",
+      "marker": "main-floor",
+      "pages": [
+        {
+          "level": 0,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Player Homes and Builds",
+      "colour": "#8f3d2f",
+      "marker": "player-homes",
+      "pages": [
+        {
+          "level": 1,
+          "column": 0
+        },
+        {
+          "level": 0,
+          "column": 1
+        },
+        {
+          "level": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "name": "Mesa Biomes",
+      "colour": "#a15426",
+      "marker": "mesa",
+      "pages": [
+        {
+          "level": 2,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Desert Biomes",
+      "colour": "#ba8524",
+      "marker": "desert",
+      "pages": [
+        {
+          "level": 3,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Forest & Jungle Biomes",
+      "colour": "#687635",
+      "marker": "forest",
+      "pages": [
+        {
+          "level": 4,
+          "column": 0
+        },
+        {
+          "level": 1,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "name": "Winter Biomes",
+      "colour": "#575b5b",
+      "marker": "winter",
+      "pages": [
+        {
+          "level": 5,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Ocean & Swamp Biomes",
+      "colour": "#4a3c5b",
+      "marker": "ocean",
+      "pages": [
+        {
+          "level": 6,
+          "column": 0
+        },
+        {
+          "level": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "name": "Plains Biomes",
+      "colour": "#764656",
+      "marker": "plains",
+      "pages": [
+        {
+          "level": 7,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Fungus Biomes",
+      "colour": "#96586d",
+      "marker": "fungus",
+      "pages": [
+        {
+          "level": 8,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Rocky Horror Biome Show",
+      "colour": "#a24e4f",
+      "marker": "rocky",
+      "pages": [
+        {
+          "level": 9,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Miscellanea",
+      "colour": "#8f3d2f",
+      "marker": "misc",
+      "pages": [
+        {
+          "level": 10,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "name": "Trophy Hall",
+      "colour": "#be9d6c",
+      "marker": "trophy",
+      "pages": [
+        {
+          "level": 2,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "name": "Generated Structures",
+      "colour": "#3c3840",
+      "marker": "generated",
+      "pages": [
+        {
+          "level": 5,
+          "column": 1
+        }
+      ]
+    }
+  ]
+}
