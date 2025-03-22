@@ -180,12 +180,8 @@ def format_sign(poi, title, note, include_first_line=False):
         if poi["id"] in ["minecraft:sign", "minecraft:hanging_sign"]:
             poi_type = "hanging" if poi["id"] == "minecraft:hanging_sign" else "normal"
 
-            if "front_text" in poi:
-                front_lines = poi["front_text"]["messagesRaw"]
-                back_lines = poi["back_text"]["messagesRaw"]
-            else:
-                front_lines = [poi["Text1Raw"], poi["Text2Raw"], poi["Text3Raw"], poi["Text4Raw"]]
-                back_lines = []
+            front_lines = poi["front_text"]["messagesHtml"]
+            back_lines = poi["back_text"]["messagesHtml"]
 
             if not include_first_line:
                 front_lines = front_lines[1:]
@@ -200,8 +196,8 @@ def format_sign(poi, title, note, include_first_line=False):
                         break
                 return lines
 
-            front_lines = trim_blank_lines([json_text_to_html(x) for x in front_lines])
-            back_lines = trim_blank_lines([json_text_to_html(x) for x in back_lines])
+            front_lines = trim_blank_lines(front_lines)
+            back_lines = trim_blank_lines(back_lines)
 
         else:
             poi_type = "none"
@@ -540,7 +536,7 @@ def fastlizard_rail_line_postprocess(pois):
         fake_poi['id'] = 'minecraft:sign'
         fake_poi['x'], fake_poi['y'], fake_poi['z'] = (x, y, z)
         fake_poi['front_text'] = front_text
-        fake_poi['back_text'] = dict({'messagesRaw': []})
+        fake_poi['back_text'] = dict({'messages': [], 'messagesHtml': []})
 
         fake_poi['hovertext'], fake_poi['text'] = format_sign(fake_poi, station_type, note, include_first_line=True)
 
@@ -651,12 +647,12 @@ def graves_filter(poi):
             graves_cache[grave_uuid] = ["", "", "", ""]
 
         if poi["CustomName"].endswith("'s Grave"):
-            graves_cache[grave_uuid][0] = poi["CustomNameRaw"]
+            graves_cache[grave_uuid][0] = poi["CustomNameHtml"]
             graves_cache[grave_uuid][3] = poi["CustomName"]  # for the hover text
         elif poi["CustomName"].startswith("Death: "):
-            graves_cache[grave_uuid][2] = poi["CustomNameRaw"]
+            graves_cache[grave_uuid][2] = poi["CustomNameHtml"]
         else:
-            graves_cache[grave_uuid][1] = poi["CustomNameRaw"]
+            graves_cache[grave_uuid][1] = poi["CustomNameHtml"]
 
         if not all(graves_cache[grave_uuid]):
             # Not yet got complete data for this grave; skip for now and a later POI should complete it
@@ -666,9 +662,9 @@ def graves_filter(poi):
 
         window = '<div class="infoWindow-grave-wrapper">'
         window += '<div class="infoWindow-grave-overlay">'
-        line1 = json_text_to_html(graves_cache[grave_uuid][0])
-        line2 = json_text_to_html(graves_cache[grave_uuid][1])
-        line3 = json_text_to_html(graves_cache[grave_uuid][2])
+        line1 = graves_cache[grave_uuid][0]
+        line2 = graves_cache[grave_uuid][1]
+        line3 = graves_cache[grave_uuid][2]
 
         window += '<div class="infoWindow-grave-text"><h4>%s</h4><div>%s</div><div>%s</div></div>' % (line1, line2, line3)
 
@@ -772,8 +768,8 @@ def _process_entity_poi(poi):
     window = '<div class="infoWindow-entity-wrapper">'
     window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
 
-    if "CustomNameRaw" in poi:
-        name_html = json_text_to_html(poi["CustomNameRaw"])
+    if "CustomNameHtml" in poi:
+        name_html = poi["CustomNameHtml"]
     else:
         name_html = entity_id
 
@@ -913,127 +909,6 @@ def fastlizard_mcal_postprocess(pois):
     })
 
     return [newPoi]
-
-
-def json_text_to_html(json_text):
-    """
-    This is roughly based on the Overviewer Core function jsonText. The
-    warning from that function, copied below, also applies to this function.
-
-    The aforementioned warning reads as follows:
-
-    If you want to keep your stomach contents do not, under any circumstance,
-    read the body of the following function. You have been warned.
-    """
-
-    if json_text is None or json_text == "null":
-        return ""
-
-    json_text_colours = ["black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray",
-                         "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white"]
-
-    if ((json_text.startswith('"') and json_text.endswith('"')) or
-            (json_text.startswith('{') and json_text.endswith('}'))):
-        try:
-            js = json.loads(json_text)
-        except ValueError:
-            return json_text
-
-        def parse_internal(input_value, colour, bold, italic, underlined, strikethrough, obfuscated):
-            """
-            Input can be a list, object, or bare string.
-            https://minecraft.wiki/w/Raw_JSON_text_format
-            """
-            output_value = ""
-            if isinstance(input_value, list):
-                for extra in input_value:
-                    output_value += parse_internal(extra, colour, bold, italic, underlined, strikethrough, obfuscated)
-            elif isinstance(input_value, dict):
-                has_value = False
-
-                if 'color' in input_value:
-                    if input_value['color'] in json_text_colours:
-                        colour = input_value['color']
-                    elif input_value['color'].startswith('#'):
-                        colour = input_value['color']
-                if 'bold' in input_value:
-                    bold = input_value['bold']
-                if 'italic' in input_value:
-                    italic = input_value['italic']
-                if 'underlined' in input_value:
-                    underlined = input_value['underlined']
-                if 'strikethrough' in input_value:
-                    strikethrough = input_value['strikethrough']
-                if 'obfuscated' in input_value:
-                    obfuscated = input_value['obfuscated']
-
-                if "text" in input_value and len(input_value["text"]) > 0:
-                    output_value = style_text(input_value['text'], colour, bold, italic, underlined, strikethrough, obfuscated)
-                    has_value = True
-                if "extra" in input_value and len(input_value["extra"]) > 0:
-                    extra_bits = parse_internal(input_value["extra"], colour, bold, italic, underlined, strikethrough, obfuscated)
-                    if extra_bits != "":
-                        output_value += extra_bits
-                        has_value = True
-
-                if not has_value:
-                    output_value = ""
-            elif isinstance(input_value, str):
-                output_value = style_text(input_value, colour, bold, italic, underlined, strikethrough, obfuscated)
-            return output_value
-
-        def style_text(text, colour, bold, italic, underlined, strikethrough, obfuscated):
-            if text is None or text == "":
-                # No text to render, no point wrapping it.
-                return ""
-
-            if colour is None and not bold and not italic and not underlined and not strikethrough and not obfuscated:
-                # plain text, just return as-is
-                return text
-
-            css_class = ''
-            style_attr = ''
-            output_value = ''
-            custom_colour = False
-
-            if colour is not None:
-                if colour in json_text_colours:
-                    css_class += ' mctext-' + colour
-                elif colour.startswith('#'):
-                    if not obfuscated:
-                        # we'll deal with obfuscated custom-coloured text separately.
-                        style_attr += 'color: %s;' % colour
-                    custom_colour = True
-            if bold:
-                css_class += ' mctext-bold'
-            if italic:
-                css_class += ' mctext-italic'
-            if underlined:
-                css_class += ' mctext-underlined'
-            if strikethrough:
-                css_class += ' mctext-strikethrough'
-            if obfuscated:
-                if not custom_colour:
-                    css_class += ' mctext-obfuscated'
-                else:
-                    # thanks, I hate it.
-                    style_attr += f'text-shadow: 0 0 6px {colour}, 0 0 6px {colour}, 0 0 6px {colour}, 0 0 6px {colour}, 0 0 8px {colour}, 0 0 8px {colour};color: transparent;'
-
-            if style_attr != '':
-                style_attr = f'style="{style_attr}"'
-
-            output_value += '<span class="%s" %s>' % (css_class.lstrip(), style_attr)
-            output_value += text
-            output_value += '</span>'
-
-            return output_value
-
-        parse_result = parse_internal(js, None, False, False, False, False, False)
-
-        if parse_result != "":
-            parse_result = f'<span class="mc-jsontext">{parse_result}</span>'
-
-        return parse_result
 
 
 def int_or_default(i, default):
