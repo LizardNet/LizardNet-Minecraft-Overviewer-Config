@@ -16,6 +16,23 @@
       "message": "I would like to enter into the permanent record that this is all @luc.ritchie@gmail.com\u0027s fault",
       "revId": "cfb372a340c987d599c05f7ae5fcd3b1ea0fdba6",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f848852d_740d6775",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-03-22T11:20:42Z",
+      "side": 1,
+      "message": "LGTM, will test in production.\n\n🫡",
+      "revId": "cfb372a340c987d599c05f7ae5fcd3b1ea0fdba6",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ]
 }
