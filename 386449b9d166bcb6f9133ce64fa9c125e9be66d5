@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "740ac36d_3b4ed147",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-03-22T11:26:26Z",
+      "side": 1,
+      "message": "LGTM, test it in prod, etc.",
+      "revId": "386449b9d166bcb6f9133ce64fa9c125e9be66d5",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e70b42d2_2ad5c880",
+        "filename": "common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-03-22T11:26:26Z",
+      "side": 1,
+      "message": "Typo, but honestly I\u0027m keeping this",
+      "range": {
+        "startLine": 848,
+        "startChar": 32,
+        "endLine": 848,
+        "endChar": 44
+      },
+      "revId": "386449b9d166bcb6f9133ce64fa9c125e9be66d5",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
