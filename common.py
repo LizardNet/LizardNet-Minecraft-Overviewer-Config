@@ -66,7 +66,6 @@ def overworld_marker_definitions():
             icon="custom-icons/marker_calendar.png",
             checked=True,
             showIconInLegend=True,
-            postProcessFunction=fastlizard_mcal_postprocess
         ),
     ]
 
@@ -104,6 +103,13 @@ def nether_marker_definitions():
             checked=True,
             showIconInLegend=True
         ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
+        ),
     ]
 
 
@@ -130,6 +136,13 @@ def nether_roof_marker_definitions():
             icon="custom-icons/player/marker_headstone.png",
             checked=True,
             showIconInLegend=True
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
         ),
     ]
 
@@ -171,6 +184,13 @@ def end_marker_definitions():
             icon="custom-icons/player/marker_headstone.png",
             checked=True,
             showIconInLegend=True
+        ),
+        dict(
+            name="mCalendar",
+            filterFunction=fastlizard_mcal_filter,
+            icon="custom-icons/marker_calendar.png",
+            checked=True,
+            showIconInLegend=True,
         ),
     ]
 
@@ -821,43 +841,15 @@ def all_allays_filter(poi):
 
 
 def fastlizard_mcal_filter(poi):
-    if poi['id'] != 'minecraft:sign':
-        return None
-
-    if poi['front_text']['messages'][0].strip() != '#mCal':
+    # If anyone actually uses a hanging sigh for this...
+    if poi['id'] not in ['minecraft:sign', 'minecraft:hanging_sign']:
         return None
 
     try:
-        username = poi['front_text']['messages'][1].strip()
-        rawDate = poi['front_text']['messages'][2].strip()
-        if rawDate.startswith('Date:'):
-            rawDate = rawDate[len('Date:'):]
-        rawDate = rawDate.strip()
-
-        parsedDate = dateutil.parser.parse(rawDate, fuzzy=True)
-
-        # If specified date is Saturday, push it to Sunday
-        # This arbitrary decision is because UTC is the One True Timezone(tm).
-        if parsedDate.isoweekday() == 6:
-            parsedDate += datetime.timedelta(days=1)
-
-        # Skip past dates.
-        if parsedDate < dateutil.utils.today():
-            return None
-
-        rsvp = poi['front_text']['messages'][3].strip()
-        if rsvp.startswith('RSVP:'):
-            rsvp = rsvp[len('RSVP:'):]
-        rsvp = rsvp.strip()
-
-        extra = dict({
-            'username': username,
-            'date': parsedDate.date().isoformat(),
-            'rsvp': rsvp,
-        })
-
+        front_rsvp = extract_rsvp(poi['front_text'])
+        back_rsvp = extract_rsvp(poi['back_text'])
         data = dict({
-            'extra': extra,
+            'extra': [front_rsvp, back_rsvp],
         })
 
         return data
@@ -865,15 +857,54 @@ def fastlizard_mcal_filter(poi):
         logging.warning("Unable to process mCal marker at [%d, %d, %d]: (%s) %s", poi['x'], poi['y'], poi['z'], type(e).__name__, e)
 
 
+def extract_rsvp(sign_side):
+    if sign_side['messages'][0].strip() != '#mCal':
+        return None
+
+    username = sign_side['messages'][1].strip()
+    rawDate = sign_side['messages'][2].strip()
+    if rawDate.startswith('Date:'):
+        rawDate = rawDate[len('Date:'):]
+    rawDate = rawDate.strip()
+
+    parsedDate = dateutil.parser.parse(rawDate, fuzzy=True)
+
+    # If specified date is Saturday, push it to Sunday
+    # This arbitrary decision is because UTC is the One True Timezone(tm).
+    if parsedDate.isoweekday() == 6:
+        parsedDate += datetime.timedelta(days=1)
+
+    # Skip past dates.
+    if parsedDate < dateutil.utils.today():
+        return None
+
+    rsvp = sign_side['messages'][3].strip()
+    if rsvp.startswith('RSVP:'):
+        rsvp = rsvp[len('RSVP:'):]
+    rsvp = rsvp.strip()
+
+    data = dict({
+        'username': username,
+        'date': parsedDate.date().isoformat(),
+        'rsvp': rsvp,
+    })
+
+    return data
+
+
 def fastlizard_mcal_postprocess(pois):
+    """
+    Note: this postprocess function is called from the global postprocess handler, not from the usual regionset handler
+    """
     by_date = dict()
 
     vcal = "BEGIN:VCALENDAR\nVERSION:2.0\n"
 
     for poi in pois:
-        if poi['extra']['date'] not in by_date:
-            by_date[poi['extra']['date']] = []
-        by_date[poi['extra']['date']].append(poi['extra'])
+        for i in [i for i in poi['extra'] if i is not None]:
+            if i['date'] not in by_date:
+                by_date[i['date']] = []
+            by_date[i['date']].append(i)
 
     window = '<div class="icon-header"><img src="custom-icons/marker_calendar.png" alt=""><h2>Minecraft Calendar</h2><a href="Minecraft.ical">iCal</a></div>'
     window += '<div class="mCal-container">'
@@ -883,11 +914,15 @@ def fastlizard_mcal_postprocess(pois):
         dateDisplay = dateParsed.strftime('%a, %B %d')
 
         eventDescription = ""
+        event_rsvps = []
 
         window += f'<div class="mCal-date-entry"><h3>{dateDisplay}</h3><dl>'
         for poi in by_date[d]:
-            window+= f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
-            eventDescription+= f'{poi["username"]}: {poi["rsvp"]}\\n'
+            this_rsvp = f'<dt>{poi["username"]}</dt><dd>{poi["rsvp"]}</dd>'
+            if this_rsvp not in event_rsvps:
+                window += this_rsvp
+                event_rsvps.append(this_rsvp)
+                eventDescription+= f'{poi["username"]}: {poi["rsvp"]}\\n'
         window += f'</dl></div>'
 
         eventUid = f"minecraft{dateParsed.strftime('%Y%m%d')}@minecraft.fastlizard4.org"
@@ -916,3 +951,17 @@ def int_or_default(i, default):
         return int(i)
     except ValueError:
         return default
+
+def global_postprocess(markers):
+    mCal_group_names = [x for x in markers if markers[x]['name'] == 'mCalendar']
+
+    all_mCal_pois = []
+    for id in mCal_group_names:
+        all_mCal_pois.extend(markers[id]['raw'])
+
+    mCal_result = fastlizard_mcal_postprocess(all_mCal_pois)
+
+    for id in mCal_group_names:
+        markers[id]['raw'] = mCal_result
+
+    return markers

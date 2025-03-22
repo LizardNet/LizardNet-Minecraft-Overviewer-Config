@@ -10,6 +10,7 @@ from common import (
     overworld_marker_definitions,
     nether_marker_definitions,
     end_marker_definitions,
+    global_postprocess,
 )
 
 worlds = OrderedDict()
@@ -43,6 +44,8 @@ else:
     observer_list = [LoggingObserver()]
 
 observer = MultiplexingObserver(*observer_list)
+
+genpoi_global_postprocess = global_postprocess
 
 attribution = '<a href="https://mapicons.mapsmarker.com">Map Icons Collection</a>'
 
