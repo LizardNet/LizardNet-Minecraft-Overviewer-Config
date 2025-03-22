@@ -2,6 +2,7 @@ import json
 import logging
 import datetime
 import os
+import html
 
 import dateutil.parser
 import dateutil.utils
@@ -231,8 +232,8 @@ def format_sign(poi, title, note, include_first_line=False):
 
         title_html = ""
         if title is not None:
-            title_html = "<strong>" + title + "</strong><br />"
-            hover.insert(0, title)
+            title_html = "<strong>" + html.escape(title) + "</strong><br />"
+            hover.insert(0, html.escape(title))
 
         info_window_text = title_html
         front_lines_text = ""
@@ -425,9 +426,9 @@ def fastlizard_rail_line_filter(poi):
         dy = int_or_default(dy, 0)
         dz = int_or_default(dz, 0)
         sequence = int_or_default(i, 0)
-        line_colour = i if int_or_default(i, None) is None else None
+        line_colour = html.escape(i) if int_or_default(i, None) is None else None
 
-        path = ' '.join([marker_side['messages'][1], marker_side['messages'][2]]).strip()
+        path = html.escape(' '.join([marker_side['messages'][1], marker_side['messages'][2]]).strip())
 
         extra = dict({
             'type': marker_type,
@@ -445,7 +446,7 @@ def fastlizard_rail_line_filter(poi):
         })
 
         if marker_type == RAIL_STATION_MARKER:
-            station_name = ' '.join(display_side['messages']).strip()
+            station_name = html.escape(' '.join(display_side['messages']).strip())
             extra['station'] = station_name
             extra['text'] = display_side
 
@@ -783,7 +784,7 @@ def _process_entity_poi(poi):
     **Do NOT mutate the ``poi`` parameter in this function.**"""
     entity_id = poi['id'][len('minecraft:'):]
 
-    hover = "%s" % (poi.get("CustomName") or entity_id)
+    hover = "%s" % (html.escape(poi.get("CustomName") or entity_id))
 
     window = '<div class="infoWindow-entity-wrapper">'
     window += '<div class="infoWindow-entity-icon icon mc-entity-%s"></div>' % entity_id
@@ -861,7 +862,8 @@ def extract_rsvp(sign_side):
     if sign_side['messages'][0].strip() != '#mCal':
         return None
 
-    username = sign_side['messages'][1].strip()
+    username = html.escape(sign_side['messages'][1].strip())
+
     rawDate = sign_side['messages'][2].strip()
     if rawDate.startswith('Date:'):
         rawDate = rawDate[len('Date:'):]
@@ -878,7 +880,7 @@ def extract_rsvp(sign_side):
     if parsedDate < dateutil.utils.today():
         return None
 
-    rsvp = sign_side['messages'][3].strip()
+    rsvp = html.escape(sign_side['messages'][3].strip())
     if rsvp.startswith('RSVP:'):
         rsvp = rsvp[len('RSVP:'):]
     rsvp = rsvp.strip()
