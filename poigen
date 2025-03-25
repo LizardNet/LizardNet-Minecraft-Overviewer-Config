@@ -12,6 +12,7 @@ ORIGINAL_MESSAGE=${ORIGINAL_MESSAGE%;*}
 
 jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", update: (60 * 1000), messageTime: '"$(date -u +%s)"'}' > "${OVERVIEWER_OUTPUT_DIRECTORY}/progress.json"
 
+rmdir "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata"
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata"
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata"
 
