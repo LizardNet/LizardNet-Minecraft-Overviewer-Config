@@ -15,7 +15,7 @@ jq -nc '{message: "POIgen in progress.... This usually takes 1.5~2.0 hours.", up
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_nether/playerdata"
 ln -sf "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/playerdata" "${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob_the_end/playerdata"
 
-/opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py
+/opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -p 3 --genpoi --config=config.py -v
 
 # Regenerate the web assets. This is done by mapgen automatically, so is unnecessary 99% of the time.
 # This is useful in cases where web assets are updated by an Overviewer upgrade, but a mapgen has not been run.
