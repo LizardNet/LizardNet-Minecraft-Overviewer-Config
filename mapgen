@@ -5,30 +5,4 @@ set -o pipefail
 
 export IN_MAPGEN=1
 
-##############################################################################
-# super secret spy satellite signal jammer.
-#
-# Yes, it looks sus. Yes, it is a little bit sus.
-# Yes, this will be revealed at a later date. For now though, NO PEEKING.
-
-skipRegions=( "r.4.-8.mca" "r.4.-9.mca" )
-
-backupDir="${OVERVIEWER_OUTPUT_DIRECTORY}/.regionAntiSpoilerBackup"
-worldRegionDirectory="${MINECRAFT_WORLD_STAGING}/${SERVER}/Bob/region"
-
-mkdir -p "$backupDir"
-
-for region in "${skipRegions[@]}"; do
-    if [ ! -f "$backupDir/$region" ]; then
-        # Backup file doesn't exist, so copy current region file to backup
-        # This doesn't protect *this* render, but will protect future renders
-        cp "$worldRegionDirectory/$region" "$backupDir/$region"
-    else
-        # Backup file exists, so copy it back to the world region directory
-        # This ensures this region file "hasn't changed" according to overviewer
-        cp --preserve "$backupDir/$region" "$worldRegionDirectory/$region"
-    fi
-done
-##############################################################################
-
 /opt/python/3.10.13/bin/python3.10 /opt/The-Minecraft-Overviewer/overviewer.py -v -p 6 --no-tile-checks --config=config.py
