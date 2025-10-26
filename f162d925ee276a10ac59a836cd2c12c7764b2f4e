@@ -16,6 +16,24 @@
       "message": "This merge should be accompanied by some manual cleanup of the `${OVERVIEWER_OUTPUT_DIRECTORY}/.regionAntiSpoilerBackup` folder",
       "revId": "f162d925ee276a10ac59a836cd2c12c7764b2f4e",
       "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23c4aff7_230f32a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-10-26T07:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e75af9_1d28b58e",
+      "revId": "f162d925ee276a10ac59a836cd2c12c7764b2f4e",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
     }
   ],
   "submitRequirementResults": []
