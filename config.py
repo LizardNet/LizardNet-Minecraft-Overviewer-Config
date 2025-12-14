@@ -6,6 +6,7 @@ sys.path.append(os.environ.get("WORKSPACE"))
 from collections import OrderedDict
 
 from .observer import JSObserver, MultiplexingObserver, LoggingObserver
+from .optimizeimages import optipng
 from common import (
     overworld_marker_definitions,
     nether_marker_definitions,
