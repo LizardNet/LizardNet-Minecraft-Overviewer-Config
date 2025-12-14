@@ -99,7 +99,7 @@ renders["biomeoverlay"] = {
     "title": "Biome Coloring Overlay",
     "overlay": ["myrender"],
     "dimension": "overworld",
-    "imgformat": "jpeg",
-    "imgquality": 90
-    # "optimizeimg": [optipng(olevel=3)]
+    "imgformat": "png",
+    # "imgquality": 90
+    "optimizeimg": [optipng(olevel=3)]
 }
