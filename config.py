@@ -6,7 +6,6 @@ sys.path.append(os.environ.get("WORKSPACE"))
 from collections import OrderedDict
 
 from .observer import JSObserver, MultiplexingObserver, LoggingObserver
-from .optimizeimages import optipng
 from common import (
     overworld_marker_definitions,
     nether_marker_definitions,
@@ -100,7 +99,7 @@ renders["biomeoverlay"] = {
     "title": "Biome Coloring Overlay",
     "overlay": ["myrender"],
     "dimension": "overworld",
-    "imgformat": "png",
+    "imgformat": "png"
     # "imgquality": 90
-    "optimizeimg": [optipng(olevel=3)]
+    # "optimizeimg": [optipng(olevel=3)]
 }
