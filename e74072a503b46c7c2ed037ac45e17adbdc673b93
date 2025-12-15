@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4ff216d_997d96ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1
+      },
+      "writtenOn": "2025-12-15T13:35:30Z",
+      "side": 1,
+      "message": "Verified by running the config on an EC2 instance as part of an expedited render.",
+      "revId": "e74072a503b46c7c2ed037ac45e17adbdc673b93",
+      "serverId": "cf5d0eaf-4814-484b-b55f-41cd7f22928e"
+    }
+  ]
+}
